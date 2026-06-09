@@ -1,7 +1,17 @@
 import React from 'react'
 import './Main.css'
 import {assets} from '../../assets/assets.js'
+import { useState } from 'react'
+import { sendMessage } from '../../services/api.js'
 const Main = () => {
+    const [prompt,setPrompt] = useState('');
+
+    const handleSend = async () => {
+        if(!prompt.trim()) return;
+        const response = await sendMessage(prompt);
+        console.log(response.reply);
+        setPrompt('');
+    }
   return (
     <div className='main'>
         <div className="nav">
@@ -34,9 +44,13 @@ const Main = () => {
         <div className="bottom">
             <div className="main-bottom">
                 <div className="search-box">
-                    <input type="text" placeholder='Enter your prompt'/>
+                    <input onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e) => {
+        if (e.key === "Enter") {
+            handleSend();
+        }
+    }}type="text" placeholder='Enter your prompt' value={prompt}/>
                     <div>
-                        <img src={assets.send_icon} alt="" />
+                        <img onClick={handleSend} src={assets.send_icon} alt="" />
                     </div>
                 </div>
                 <div className="bottom-info">
