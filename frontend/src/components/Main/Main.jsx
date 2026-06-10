@@ -5,11 +5,13 @@ import { useState } from 'react'
 import { sendMessage } from '../../services/api.js'
 const Main = () => {
     const [prompt,setPrompt] = useState('');
+    const [response,setResponse] = useState('');
 
     const handleSend = async () => {
         if(!prompt.trim()) return;
-        const response = await sendMessage(prompt);
-        console.log(response.reply);
+        const data = await sendMessage(prompt);
+        console.log(data.reply);
+        setResponse(data.reply);
         setPrompt('');
     }
   return (
@@ -18,7 +20,7 @@ const Main = () => {
             <p>Gemini</p>
         </div>
         <div className="main-container">
-            <div className="greet">
+          {response===""? (<><div className="greet">
                 <p><span>Hello, Dev</span></p>
                 <p>How can i help you ?</p>
             </div>
@@ -39,8 +41,8 @@ const Main = () => {
                     <p>Improve the readability of the following code</p>
                     <img src={assets.code_icon} alt="" />
                 </div>
-            </div>
-        </div>
+            </div></>): <div className='response'>{response}</div>}
+        </div> 
         <div className="bottom">
             <div className="main-bottom">
                 <div className="search-box">
