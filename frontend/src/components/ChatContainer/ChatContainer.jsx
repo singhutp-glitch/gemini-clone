@@ -1,6 +1,8 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 import './ChatContainer.css'
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const ChatContainer = ({messages}) => {
   return (
@@ -21,7 +23,9 @@ const ChatContainer = ({messages}) => {
       <div className="message-content">
         {message.loading
           ? "Thinking..."
-          : message.content}
+          : <ReactMarkdown remarkPlugins={[remarkGfm]}>
+    {message.content}
+</ReactMarkdown>}
       </div>
     </div>
   ))}
