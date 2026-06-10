@@ -21,7 +21,7 @@ export async function generateResponseStream(prompt) {
 
       maxOutputTokens: 150,
 
-      temperature: 0.7,
+      temperature: 1,
       topP: 0.95,
     },
   });
