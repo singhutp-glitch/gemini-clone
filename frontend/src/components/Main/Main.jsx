@@ -2,7 +2,7 @@ import React from 'react'
 import './Main.css'
 import {assets} from '../../assets/assets.js'
 import { useState } from 'react'
-import { sendMessage } from '../../services/api.js'
+import { streamMessage } from '../../services/api.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from './Greet.jsx'
 
@@ -11,34 +11,53 @@ const Main = () => {
     const [messages,setMessages] = useState([])
 
     const handleSend = async () => {
-        if(!prompt.trim()) return;
 
-        const currentPrompt = prompt;
-        setPrompt('');
-        setMessages(prev => [...prev,
-            {
-                role:'user',
-                content:currentPrompt
-            },
-            {
-                role:'assistant',
-                content:"",
-                loading:true
-            }])
+    if (!prompt.trim()) return;
 
-        const data = await sendMessage(currentPrompt);
-        console.log(data.reply);
-        setMessages(prev => {
-            const updated = [...prev];
-            updated[updated.length - 1] = {
-                role:'assistant',
-                content:data.reply,
-                loading:false
-            }
-            return updated;
-    })
-        
-    }
+    const currentPrompt =
+        prompt;
+
+    setPrompt("");
+
+    setMessages(prev => [
+        ...prev,
+        {
+            role: "user",
+            content: currentPrompt,
+        },
+        {
+            role: "assistant",
+            content: "",
+        },
+    ]);
+
+    let accumulated = "";
+
+    await streamMessage(
+        currentPrompt,
+        chunk => {
+
+            accumulated += chunk;
+
+            setMessages(prev => {
+
+                const updated =
+                    [...prev];
+
+                updated[
+                    updated.length - 1
+                ] = {
+                    role: "assistant",
+                    content:
+                        accumulated,
+                        loading:false
+                };
+
+                return updated;
+            });
+        }
+    );
+};
   return (
     <div className='main'>
         <div className="nav">

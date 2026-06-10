@@ -7,8 +7,8 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
 });
 
-export async function generateResponse(prompt) {
-  const response = await ai.models.generateContent({
+export async function generateResponseStream(prompt) {
+  const stream = await ai.models.generateContentStream({
     model: "gemini-3.1-flash-lite",
 
     contents: prompt,
@@ -17,8 +17,6 @@ export async function generateResponse(prompt) {
       systemInstruction: `
         You are a helpful AI assistant.
         Answer clearly and accurately.
-        Keep responses under 50 words.
-        but above 20
       `,
 
       maxOutputTokens: 150,
@@ -28,5 +26,5 @@ export async function generateResponse(prompt) {
     },
   });
 
-  return response.text;
+  return stream;
 }

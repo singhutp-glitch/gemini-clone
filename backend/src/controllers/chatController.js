@@ -1,4 +1,4 @@
-import { generateResponse } from "../services/geminiService.js";
+import { generateResponseStream } from "../services/geminiService.js";
 
 
 const sendMessage = async (req,res) => {
@@ -10,11 +10,19 @@ const sendMessage = async (req,res) => {
             })
         }
 
-        const reply = await generateResponse(prompt);
+        res.setHeader("Content-Type","text/plain; charset=utf-8");
+        res.setHeader('Transfer-Encoding','chunked')
+
+
+        const stream= await generateResponseStream(prompt);
         
-        res.json({
-            reply,
-        });
+        for await (const chunk of stream){
+            if(chunk){
+                res.write(chunk.text);
+            }
+        }
+        res.end();
+        
     }catch(error){
         console.error(error);
         res.status(500).json({
