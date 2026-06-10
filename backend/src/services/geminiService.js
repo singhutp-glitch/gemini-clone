@@ -9,7 +9,7 @@ const ai = new GoogleGenAI({
 
 export async function generateResponse(prompt) {
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.1-flash-lite",
 
     contents: prompt,
 
@@ -18,9 +18,10 @@ export async function generateResponse(prompt) {
         You are a helpful AI assistant.
         Answer clearly and accurately.
         Keep responses under 50 words.
+        but above 20
       `,
 
-      maxOutputTokens: 50,
+      maxOutputTokens: 150,
 
       temperature: 0.7,
       topP: 0.95,

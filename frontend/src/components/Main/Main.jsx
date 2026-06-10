@@ -3,16 +3,41 @@ import './Main.css'
 import {assets} from '../../assets/assets.js'
 import { useState } from 'react'
 import { sendMessage } from '../../services/api.js'
+import ChatContainer from '../ChatContainer/ChatContainer.jsx'
+import Greet from './Greet.jsx'
+
 const Main = () => {
     const [prompt,setPrompt] = useState('');
-    const [response,setResponse] = useState('');
+    const [messages,setMessages] = useState([])
 
     const handleSend = async () => {
         if(!prompt.trim()) return;
-        const data = await sendMessage(prompt);
-        console.log(data.reply);
-        setResponse(data.reply);
+
+        const currentPrompt = prompt;
         setPrompt('');
+        setMessages(prev => [...prev,
+            {
+                role:'user',
+                content:currentPrompt
+            },
+            {
+                role:'assistant',
+                content:"",
+                loading:true
+            }])
+
+        const data = await sendMessage(currentPrompt);
+        console.log(data.reply);
+        setMessages(prev => {
+            const updated = [...prev];
+            updated[updated.length - 1] = {
+                role:'assistant',
+                content:data.reply,
+                loading:false
+            }
+            return updated;
+    })
+        
     }
   return (
     <div className='main'>
@@ -20,28 +45,7 @@ const Main = () => {
             <p>Gemini</p>
         </div>
         <div className="main-container">
-          {response===""? (<><div className="greet">
-                <p><span>Hello, Dev</span></p>
-                <p>How can i help you ?</p>
-            </div>
-            <div className="cards">
-                <div className="card">
-                    <p>Suggest beautiful places to see on upcoming road trip</p>
-                    <img src={assets.compass_icon} alt="" />
-                </div>
-                <div className="card">
-                    <p>Explain this concept of urban planning</p>
-                    <img src={assets.bulb_icon} alt="" />
-                </div>
-                <div className="card">
-                    <p>Brainstorm some ideas for upcoming tean project</p>
-                    <img src={assets.message_icon} alt="" />
-                </div>
-                <div className="card">
-                    <p>Improve the readability of the following code</p>
-                    <img src={assets.code_icon} alt="" />
-                </div>
-            </div></>): <div className='response'>{response}</div>}
+          {messages.length === 0? <Greet/>: <ChatContainer messages = {messages}/>}
         </div> 
         <div className="bottom">
             <div className="main-bottom">
