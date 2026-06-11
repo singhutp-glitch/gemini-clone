@@ -1,10 +1,13 @@
 .side-bar{
-    min-height: 100vh;
-    display: inline-flex;
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     background-color:hsl(0, 0%, 97%) ;
     padding: 25px 15px;
+    z-index: 50;
 }
 
 .side-bar img{
