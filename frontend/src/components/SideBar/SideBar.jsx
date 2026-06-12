@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import './SideBar.css'
 import {assets} from '../../assets/assets.js'
-const SideBar = () => {
+const SideBar = ({setNewChatTrigger}) => {
   const [extended,setExtended] = useState(false);
 
+  const handleNewChat = () => {
+    setNewChatTrigger(prev => prev+1);
+  }
 
   return (
     <div className='side-bar'>
       <div className='top'>
         <img onClick={()=>{setExtended(prev=>!prev)}} className="menu" src={assets.menu_icon} alt="" />
-      <div className='new-chat'>
+      <div onClick={handleNewChat} className='new-chat'>
         <img src={assets.plus_icon} alt="" />
         {extended?<p>New Chat</p>:null}
       </div>
