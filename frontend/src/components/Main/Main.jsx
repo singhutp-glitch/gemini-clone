@@ -7,10 +7,9 @@ import { createNewChatId } from '../../services/api.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from './Greet.jsx'
 
-const Main = () => {
+const Main = ({currentChatId,setCurrentChatId}) => {
     const [prompt,setPrompt] = useState('');
     const [messages,setMessages] = useState([])
-    const [currentChatId, setCurrentChatId] = useState(null);
 
     const handleSend = async () => {
 

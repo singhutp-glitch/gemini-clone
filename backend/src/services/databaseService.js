@@ -1,6 +1,11 @@
 import {prisma} from '../../lib/prisma.js';
 
 export async function saveMessages(chatId,role,content){
+    console.log(
+    "Saving message:",
+    role,
+    chatId
+);
     await prisma.message.create({
         data:{
             chatId,
@@ -38,5 +43,20 @@ export async function loadMessages(chatId) {
         orderBy: {
             createdAt: "asc",
         },
+    });
+}
+export async function loadChats(userId) {
+    return prisma.chat.findMany({
+        where: {
+            userId,
+        },
+        select: {
+            id: true,
+            title: true,
+            },
+        orderBy: {
+            updatedAt: "desc",
+        },
+        take:5
     });
 }

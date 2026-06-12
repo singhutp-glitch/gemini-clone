@@ -3,6 +3,7 @@ import { saveMessages } from "../services/databaseService.js";
 import { createNewChat } from "../services/databaseService.js";
 import { loadMessages } from "../services/databaseService.js";
 import { searchChatIdwithUserId } from "../services/databaseService.js";
+import { loadChats } from "../services/databaseService.js";
 const sendMessage = async (req,res) => {
     try{
         const prompt = req.body.message;
@@ -78,37 +79,6 @@ const sendMessage = async (req,res) => {
     }
 };
 
-const firstMessagePost = async (req,res)=>{
-    try{
-        const prompt = req.body.message;
-        if(!prompt?.trim()){
-            return res.status(500).json({
-                error:'Prompt is required'
-            })
-        }
-        await saveMessages(chat.id,'user',prompt);
-
-        res.setHeader("Content-Type","text/plain; charset=utf-8");
-        res.setHeader('Transfer-Encoding','chunked')
-
-
-        const stream= await generateResponseStream(prompt);
-        
-        for await (const chunk of stream){
-            if(chunk){
-                res.write(chunk.text);
-            }
-        }
-        res.end();
-        
-    }catch(error){
-        console.error(error);
-        res.status(500).json({
-            error:'Failed to generate response'
-        })
-    }
-}
-
 const createChatPost = async(req,res) => {
     try{
         const prompt = req.body.message;
@@ -131,8 +101,23 @@ const createChatPost = async(req,res) => {
     }
 }
 
+const loadChatGet = async (req,res) => {
+    try{
+        const userChats = await loadChats(1);
+        
+        return res.json(userChats);
+
+    }catch(error){
+        console.error(error);
+        res.status(500).json({
+            error:'Failed to load chats'
+        })
+    }
+};
+
+
 export default {
     sendMessage,
-    firstMessagePost,
-    createChatPost
+    createChatPost,
+    loadChatGet
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './SideBar.css'
 import {assets} from '../../assets/assets.js'
-const SideBar = ({setNewChatTrigger}) => {
+const SideBar = ({setNewChatTrigger,chats,setChats,currentChatId,setCurrentChatId}) => {
   const [extended,setExtended] = useState(false);
 
   const handleNewChat = () => {
@@ -19,10 +19,13 @@ const SideBar = ({setNewChatTrigger}) => {
       {extended?
       <div className="recent">
         <p className='recent-title'>Recent</p>
-        <div className="recent-entry">
+        {chats.map((chat) => (
+          <div key = {chat.id} className="recent-entry">
           <img src={assets.message_icon} alt="" />
-          <p>what is React ...</p>
+          <p>{chat.title}</p>
         </div>
+        ))}
+        
       </div>
         :null}
       </div>

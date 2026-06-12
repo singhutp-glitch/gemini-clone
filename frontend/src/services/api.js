@@ -70,3 +70,14 @@ export async function createNewChatId(prompt){
     const data = await response.json();
     return data.chatId;
 }
+
+export async function getChats(){
+    const response = await fetch(
+        `http://localhost:3000/chats`,
+        {
+            method: "GET",
+        }
+    );
+    const data = await response.json();
+    return data;
+}
