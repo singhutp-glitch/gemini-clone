@@ -7,11 +7,11 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
 });
 
-export async function generateResponseStream(prompt) {
+export async function generateResponseStream(contents) {
   const stream = await ai.models.generateContentStream({
     model: "gemini-3.1-flash-lite",
 
-    contents: prompt,
+    contents,
 
     config: {
       systemInstruction: `
@@ -19,7 +19,7 @@ export async function generateResponseStream(prompt) {
         Answer clearly and accurately.
       `,
 
-      maxOutputTokens: 150,
+      maxOutputTokens: 1000,
 
       temperature: 1,
       topP: 0.95,

@@ -3,19 +3,20 @@ import './Main.css'
 import {assets} from '../../assets/assets.js'
 import { useState } from 'react'
 import { streamMessage } from '../../services/api.js'
+import { createNewChatId } from '../../services/api.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from './Greet.jsx'
 
 const Main = () => {
     const [prompt,setPrompt] = useState('');
     const [messages,setMessages] = useState([])
+    const [currentChatId, setCurrentChatId] = useState(null);
 
     const handleSend = async () => {
 
     if (!prompt.trim()) return;
 
-    const currentPrompt =
-        prompt;
+    const currentPrompt = prompt;
 
     setPrompt("");
 
@@ -28,35 +29,54 @@ const Main = () => {
         {
             role: "assistant",
             content: "",
+            loading: true,
         },
     ]);
 
-    let accumulated = "";
+    try {
 
-    await streamMessage(
-        currentPrompt,
-        chunk => {
+        let chatId = currentChatId;
 
-            accumulated += chunk;
+        if (chatId === null) {
 
-            setMessages(prev => {
+            chatId =
+                await createNewChatId(
+                    currentPrompt
+                );
 
-                const updated =
-                    [...prev];
-
-                updated[
-                    updated.length - 1
-                ] = {
-                    role: "assistant",
-                    content:
-                        accumulated,
-                        loading:false
-                };
-
-                return updated;
-            });
+            setCurrentChatId(chatId);
         }
-    );
+        let accumulated = "";
+
+        await streamMessage(
+            chatId,
+            currentPrompt,
+            chunk => {
+
+                accumulated += chunk;
+
+                setMessages(prev => {
+
+                    const updated = [...prev];
+
+                    updated[
+                        updated.length - 1
+                    ] = {
+                        ...updated[
+                            updated.length - 1
+                        ],
+                        content: accumulated,
+                        loading: false,
+                    };
+
+                    return updated;
+                });
+            }
+        );
+
+    } catch (error) {
+        console.error(error);
+    }
 };
   return (
     <div className='main'>

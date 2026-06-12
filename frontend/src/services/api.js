@@ -16,11 +16,12 @@ export async function sendMessage(message)
 }
 
 export async function streamMessage(
+    currentChatId,
     prompt,
     onChunk
 ) {
     const response = await fetch(
-        "http://localhost:3000/chat",
+        `http://localhost:3000/chat/${currentChatId}`,
         {
             method: "POST",
             headers: {
@@ -50,4 +51,22 @@ export async function streamMessage(
 
         onChunk(chunk);
     }
+}
+
+export async function createNewChatId(prompt){
+    const response = await fetch(
+        `http://localhost:3000/chat/new`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                    "application/json",
+            },
+            body: JSON.stringify({
+                message: prompt,
+            }),
+        }
+    );
+    const data = await response.json();
+    return data.chatId;
 }
