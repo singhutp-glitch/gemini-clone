@@ -8,25 +8,8 @@ import { getMessages } from '../../services/api.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from './Greet.jsx'
 
-const Main = ({currentChatId,setCurrentChatId,loadChats}) => {
+const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages}) => {
     const [prompt,setPrompt] = useState('');
-    const [messages,setMessages] = useState([])
-
-
-  useEffect(() => {
-        console.log("useEffect");
-        if(currentChatId !== null){
-            loadMessages(currentChatId)   ; 
-        }else{
-            setPrompt('');
-            setMessages([]);
-        }
-    }, [currentChatId]);
-
-    const loadMessages = async(currentChatId) => {
-        const userMessages = await getMessages(currentChatId);
-        setMessages(userMessages);
-    };
 
     const handleSend = async () => {
     if (!prompt.trim()) return;

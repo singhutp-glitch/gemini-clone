@@ -6,6 +6,7 @@ import { getChats } from "./services/api";
 function App() {
   const [chats,setChats] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
+  const [messages,setMessages] = useState([])
 
   async function loadChats(){
     const userChats = await getChats();
@@ -21,11 +22,11 @@ function App() {
 
   return (
     <>
-     <SideBar chats = {chats} setChats = {setChats} 
+     <SideBar chats = {chats} setChats = {setChats} setMessages={setMessages}
      currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}/>
 
-     <Main currentChatId = {currentChatId}setCurrentChatId = {setCurrentChatId} 
-     loadChats={loadChats}/>
+     <Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId} 
+     loadChats={loadChats} messages={messages} setMessages={setMessages}/>
     </>
   )
 }

@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
 import './SideBar.css'
 import {assets} from '../../assets/assets.js'
-const SideBar = ({chats,setChats,currentChatId,setCurrentChatId}) => {
+import { getMessages } from '../../services/api.js';
+const SideBar = ({chats,currentChatId,setCurrentChatId,setMessages}) => {
   const [extended,setExtended] = useState(false);
+  const handleNewChat = ()=>{
+    setCurrentChatId(null);
+    setMessages([]);
+  }
+  const handleChatClick = async(chatId)=>{
+    setCurrentChatId(chatId);
+    const messages = await getMessages(chatId);
+    setMessages(messages);
+  }
+
 
   return (
     <div className='side-bar'>
       <div className='top'>
         <img onClick={()=>{setExtended(prev=>!prev)}} className="menu" src={assets.menu_icon} alt="" />
-      <div onClick={()=>{setCurrentChatId(null)}} className='new-chat'>
+      <div onClick={handleNewChat} className='new-chat'>
         <img src={assets.plus_icon} alt="" />
         {extended?<p>New Chat</p>:null}
       </div>
@@ -17,7 +28,7 @@ const SideBar = ({chats,setChats,currentChatId,setCurrentChatId}) => {
         <p className='recent-title'>Recent</p>
         {chats.map((chat) => (
           <div key = {chat.id} className={'recent-entry'+(chat.id===currentChatId?' current-chat':'')}
-          onClick={()=>{setCurrentChatId(chat.id)}}>
+          onClick={()=>{handleChatClick(chat.id)}}>
           <img src={assets.message_icon} alt="" />
           <p>{chat.title}</p>
         </div>
