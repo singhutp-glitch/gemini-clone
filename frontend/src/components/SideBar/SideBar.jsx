@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
 import './SideBar.css'
 import {assets} from '../../assets/assets.js'
-const SideBar = ({setNewChatTrigger,chats,setChats,currentChatId,setCurrentChatId}) => {
+const SideBar = ({chats,setChats,currentChatId,setCurrentChatId}) => {
   const [extended,setExtended] = useState(false);
-
-  const handleNewChat = () => {
-    setNewChatTrigger(prev => prev+1);
-  }
 
   return (
     <div className='side-bar'>
       <div className='top'>
         <img onClick={()=>{setExtended(prev=>!prev)}} className="menu" src={assets.menu_icon} alt="" />
-      <div onClick={handleNewChat} className='new-chat'>
+      <div onClick={()=>{setCurrentChatId(null)}} className='new-chat'>
         <img src={assets.plus_icon} alt="" />
         {extended?<p>New Chat</p>:null}
       </div>
@@ -20,7 +16,8 @@ const SideBar = ({setNewChatTrigger,chats,setChats,currentChatId,setCurrentChatI
       <div className="recent">
         <p className='recent-title'>Recent</p>
         {chats.map((chat) => (
-          <div key = {chat.id} className={'recent-entry'+(chat.id===currentChatId?' current-chat':'')}>
+          <div key = {chat.id} className={'recent-entry'+(chat.id===currentChatId?' current-chat':'')}
+          onClick={()=>{setCurrentChatId(chat.id)}}>
           <img src={assets.message_icon} alt="" />
           <p>{chat.title}</p>
         </div>

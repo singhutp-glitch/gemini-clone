@@ -45,7 +45,7 @@ const sendMessage = async (req,res) => {
                     },
                 ],
             }));
-
+            console.log('starting streaming');
         const stream =
             await generateResponseStream(
                 geminiContents
@@ -62,7 +62,7 @@ const sendMessage = async (req,res) => {
 
             res.write(text);
         }
-
+        console.log('saving ai message in backend');
         await saveMessages(
             chatId,
             "assistant",
@@ -101,7 +101,7 @@ const createChatPost = async(req,res) => {
     }
 }
 
-const loadChatGet = async (req,res) => {
+const loadChatsGet = async (req,res) => {
     try{
         const userChats = await loadChats(1);
         
@@ -115,9 +115,31 @@ const loadChatGet = async (req,res) => {
     }
 };
 
+const loadMessagesGet = async (req,res) => {
+    try{
+        const chatId = +req.params.chatId;
+
+        const userChat = await searchChatIdwithUserId(1,chatId);
+        if(!userChat){
+            return res.status(404).json({
+                error:'Chat not found'
+            })
+        };
+        const messages = await loadMessages(chatId);
+        console.log('message loaded');
+        return res.json(messages);
+
+    }catch(error){
+        console.error(error);
+        res.status(500).json({
+            error:'Failed to load messages'
+        })
+    }
+};
 
 export default {
     sendMessage,
     createChatPost,
-    loadChatGet
+    loadChatsGet,
+    loadMessagesGet
 }

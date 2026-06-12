@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Main.css'
 import {assets} from '../../assets/assets.js'
 import { useState } from 'react'
 import { streamMessage } from '../../services/api.js'
 import { createNewChatId } from '../../services/api.js'
+import { getMessages } from '../../services/api.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from './Greet.jsx'
 
@@ -11,12 +12,25 @@ const Main = ({currentChatId,setCurrentChatId,loadChats}) => {
     const [prompt,setPrompt] = useState('');
     const [messages,setMessages] = useState([])
 
+
+  useEffect(() => {
+        console.log("useEffect");
+        if(currentChatId !== null){
+            loadMessages(currentChatId)   ; 
+        }else{
+            setPrompt('');
+            setMessages([]);
+        }
+    }, [currentChatId]);
+
+    const loadMessages = async(currentChatId) => {
+        const userMessages = await getMessages(currentChatId);
+        setMessages(userMessages);
+    };
+
     const handleSend = async () => {
-
     if (!prompt.trim()) return;
-
     const currentPrompt = prompt;
-
     setPrompt("");
 
     setMessages(prev => [
@@ -28,7 +42,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats}) => {
         {
             role: "assistant",
             content: "",
-            loading: true,
+            loading: true
         },
     ]);
 
@@ -42,6 +56,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats}) => {
                 await createNewChatId(
                     currentPrompt
                 );
+            loadChats();
 
             setCurrentChatId(chatId);
         }
@@ -72,12 +87,13 @@ const Main = ({currentChatId,setCurrentChatId,loadChats}) => {
                 });
             }
         );
-        loadChats();
+        
 
     } catch (error) {
         console.error(error);
     }
 };
+
   return (
     <div className='main'>
         <div className="nav">

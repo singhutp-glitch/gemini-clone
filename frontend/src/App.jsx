@@ -4,7 +4,6 @@ import { useState ,useEffect} from "react"
 import { getChats } from "./services/api";
 
 function App() {
-  const [newChatTrigger,setNewChatTrigger] = useState(0);
   const [chats,setChats] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
 
@@ -22,12 +21,11 @@ function App() {
 
   return (
     <>
-     <SideBar setNewChatTrigger={setNewChatTrigger} chats = {chats} 
-     setChats = {setChats} currentChatId = {currentChatId}
-     setCurrentChatId = {setCurrentChatId}/>
+     <SideBar chats = {chats} setChats = {setChats} 
+     currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}/>
 
-     <Main key = {newChatTrigger} currentChatId = {currentChatId}
-     setCurrentChatId = {setCurrentChatId} loadChats={loadChats}/>
+     <Main currentChatId = {currentChatId}setCurrentChatId = {setCurrentChatId} 
+     loadChats={loadChats}/>
     </>
   )
 }

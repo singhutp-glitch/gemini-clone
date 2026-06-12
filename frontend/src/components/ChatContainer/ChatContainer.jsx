@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 const ChatContainer = ({messages}) => {
+
   return (
     <div className="chat-container">
   {messages.map((message, index) => (

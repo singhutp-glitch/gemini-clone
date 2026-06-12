@@ -49,6 +49,10 @@ export async function loadMessages(chatId) {
         where: {
             chatId,
         },
+        select: {
+            role: true,
+            content: true,
+            },
         orderBy: {
             createdAt: "asc",
         },
