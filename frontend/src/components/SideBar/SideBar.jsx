@@ -20,7 +20,7 @@ const SideBar = ({setNewChatTrigger,chats,setChats,currentChatId,setCurrentChatI
       <div className="recent">
         <p className='recent-title'>Recent</p>
         {chats.map((chat) => (
-          <div key = {chat.id} className="recent-entry">
+          <div key = {chat.id} className={'recent-entry'+(chat.id===currentChatId?' current-chat':'')}>
           <img src={assets.message_icon} alt="" />
           <p>{chat.title}</p>
         </div>

@@ -58,6 +58,9 @@
     background-color: hsl(0, 0%, 90%);
 }
 
+.side-bar .recent-entry.current-chat{
+    background-color: hsl(0, 0%, 90%);
+}
 .side-bar .bottom{
     display: flex;
     flex-direction: column;
