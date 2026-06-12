@@ -16,13 +16,22 @@ export async function saveMessages(chatId,role,content){
     
 }
 
-export async function createNewChat(userId,title){
-    const chat = await prisma.chat.create({
-        data:{
-            title:title,
-            userId:userId
-        }
-    });
+export async function createNewChat(
+    userId,
+    title
+) {
+    title = title
+        .trim()
+        .slice(0, 60);
+
+    const chat =
+        await prisma.chat.create({
+            data: {
+                title,
+                userId,
+            },
+        });
+
     return chat;
 }
 

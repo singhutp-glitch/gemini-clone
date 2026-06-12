@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     loadChats();
-    
+
   }, []);
 
 
@@ -27,7 +27,7 @@ function App() {
      setCurrentChatId = {setCurrentChatId}/>
 
      <Main key = {newChatTrigger} currentChatId = {currentChatId}
-     setCurrentChatId = {setCurrentChatId}/>
+     setCurrentChatId = {setCurrentChatId} loadChats={loadChats}/>
     </>
   )
 }

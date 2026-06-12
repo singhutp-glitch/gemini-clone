@@ -7,7 +7,7 @@ import { createNewChatId } from '../../services/api.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from './Greet.jsx'
 
-const Main = ({currentChatId,setCurrentChatId}) => {
+const Main = ({currentChatId,setCurrentChatId,loadChats}) => {
     const [prompt,setPrompt] = useState('');
     const [messages,setMessages] = useState([])
 
@@ -72,6 +72,7 @@ const Main = ({currentChatId,setCurrentChatId}) => {
                 });
             }
         );
+        loadChats();
 
     } catch (error) {
         console.error(error);
