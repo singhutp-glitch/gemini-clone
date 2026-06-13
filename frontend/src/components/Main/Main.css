@@ -6,16 +6,6 @@
     margin-left: 80px;
 }
 
-
-.main .nav{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 22px;
-    padding: 20px;
-    color: hsl(0, 0%, 20%);
-}
-
 .main-container{
     max-width: 900px;
     margin: auto;
@@ -76,6 +66,7 @@
     bottom: 0;
     width: 100%;
     background-color: white;
+    left:30px;
 }
 .main-bottom{
     width: 100%;

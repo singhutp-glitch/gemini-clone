@@ -79,9 +79,6 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages}) =
 
   return (
     <div className='main'>
-        <div className="nav">
-            <p>Gemini</p>
-        </div>
         <div className="main-container">
           {messages.length === 0? <Greet/>: <ChatContainer messages = {messages}/>}
         </div> 
