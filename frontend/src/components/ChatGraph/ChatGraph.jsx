@@ -10,20 +10,36 @@ const nodeTypes = {
 };
 
 const ChatGraph = ({messages}) => {
-    const nodes = messages.map((message, index) => ({
+
+    const pairs = [];
+
+    for(let i = 0; i < messages.length; i += 2){
+
+        pairs.push({
+            user:
+                messages[i],
+
+            assistant:
+                messages[i + 1]
+        });
+    }
+
+    const nodes = pairs.map((pair, index) => ({
     id: index.toString(),
 
     type: "message",
 
     position: {
         x: 0,
-        y: index * 250,
+        y: index * 350,
     },
     sourcePosition: Position.Bottom,
     targetPosition: Position.Top,
     data: {
-        role: message.role,
-        content: message.content,
+        user:pair.user?.content,
+
+        assistant:pair.assistant?.content,
+
     },
 }));
     const edges =

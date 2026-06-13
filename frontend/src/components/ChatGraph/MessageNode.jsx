@@ -9,14 +9,25 @@ function MessageNode({ data }) {
                 position={Position.Top}
             />
 
-            <div className="message-role">
-                {data.role}
+            <div className="user-section">
+                <strong>
+                    User
+                </strong>
+
+                <p>
+                    {data.user.slice(0,100)}
+                </p>
             </div>
 
-            <div className="message-content">
-                {data.content}
-            </div>
+            <div className="assistant-section">
+                <strong>
+                    Gemini
+                </strong>
 
+                <p>
+                    {data.assistant.slice(0,100)}
+                </p>
+            </div>
             <Handle
                 type="source"
                 position={Position.Bottom}
