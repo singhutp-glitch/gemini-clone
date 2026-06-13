@@ -45,7 +45,6 @@ const sendMessage = async (req,res) => {
                     },
                 ],
             }));
-            console.log('starting streaming');
         const stream =
             await generateResponseStream(
                 geminiContents
@@ -62,7 +61,6 @@ const sendMessage = async (req,res) => {
 
             res.write(text);
         }
-        console.log('saving ai message in backend');
         await saveMessages(
             chatId,
             "assistant",
@@ -126,7 +124,6 @@ const loadMessagesGet = async (req,res) => {
             })
         };
         const messages = await loadMessages(chatId);
-        console.log('message loaded');
         return res.json(messages);
 
     }catch(error){
