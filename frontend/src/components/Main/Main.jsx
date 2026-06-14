@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import './Main.css'
 import {assets} from '../../assets/assets.js'
 import { useState } from 'react'
@@ -11,6 +11,7 @@ import Greet from './Greet.jsx'
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,selectedPairIndex}) => {
     const [prompt,setPrompt] = useState('');
+    const bottomRef = useRef(null);
     
 
     const handleSend = async () => {
@@ -31,6 +32,9 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         },
     ]);
 
+        bottomRef.current?.scrollIntoView({
+        behavior: "smooth",
+    });
     try {
 
         let chatId = currentChatId;
@@ -68,6 +72,9 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                         loading: false,
                     };
 
+                    bottomRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                });
                     return updated;
                 });
             }
@@ -102,6 +109,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                 </div>
             </div>
         </div>
+            <div className='bottom-scroll-box' ref={bottomRef}></div>
     </div>
   )
 }
