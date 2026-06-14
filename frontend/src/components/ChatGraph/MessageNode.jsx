@@ -21,7 +21,11 @@ function MessageNode({ data }) {
     }
 
     return (
-        <div className="message-card">
+        <div className="message-card" onClick={() =>
+                data.handleCardClick(
+                    data.startMessageIndex
+                )
+            }>
 
             <Handle
                 type="target"

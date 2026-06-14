@@ -9,18 +9,16 @@ const nodeTypes = {
     message: MessageNode,
 };
 
-const ChatGraph = ({messages}) => {
+const ChatGraph = ({messages,handleCardClick}) => {
 
     const pairs = [];
 
     for(let i = 0; i < messages.length; i += 2){
 
         pairs.push({
-            user:
-                messages[i],
-
-            assistant:
-                messages[i + 1]
+            startMessageIndex: i,
+            user:messages[i],
+            assistant:messages[i + 1]
         });
     }
 
@@ -52,6 +50,8 @@ const ChatGraph = ({messages}) => {
     sourcePosition: Position.Bottom,
     targetPosition: Position.Top,
     data: {
+       startMessageIndex:pair.startMessageIndex,
+        handleCardClick,
         user:pair.user?.content,
 
         assistant:pair.assistant?.content,
@@ -79,6 +79,7 @@ for (let i = 1; i < pairs.length; i++) {
         target: (i + 1).toString(),
     });
 }
+
   return (
     <ReactFlow
     nodes={nodes}

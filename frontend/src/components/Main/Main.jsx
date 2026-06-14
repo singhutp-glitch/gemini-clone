@@ -8,8 +8,10 @@ import { getMessages } from '../../services/api.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from './Greet.jsx'
 
-const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages}) => {
+const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
+    ,selectedPairIndex}) => {
     const [prompt,setPrompt] = useState('');
+    
 
     const handleSend = async () => {
     if (!prompt.trim()) return;
@@ -80,7 +82,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages}) =
   return (
     <div className='main'>
         <div className="main-container">
-          {messages.length === 0? <Greet/>: <ChatContainer messages = {messages}/>}
+          {messages.length === 0? <Greet/>: <ChatContainer messages = {messages}
+          selectedPairIndex={selectedPairIndex}/>}
         </div> 
         <div className="bottom">
             <div className="main-bottom">

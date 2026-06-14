@@ -10,6 +10,7 @@ function App() {
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages,setMessages] = useState([])
   const [graphMode,setGraphMode] = useState(false);
+  const [selectedPairIndex,setSelectedPairIndex] = useState(null);
 
   async function loadChats(){
     const userChats = await getChats();
@@ -21,7 +22,14 @@ function App() {
 
   }, []);
 
-
+function handleCardClick(
+    pairIndex
+) {
+    setGraphMode(false);
+    setSelectedPairIndex(
+        pairIndex
+    );
+}
 
   return (
     <>
@@ -29,9 +37,10 @@ function App() {
      currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}/>
      <div className="nav-main-section">
        <NavBar setGraphMode={setGraphMode}/>
-       {graphMode?<ChatGraph messages = {messages}/>:<Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}
+       {graphMode?<ChatGraph messages = {messages} handleCardClick={handleCardClick}
+       />:<Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}
        loadChats={loadChats} messages={messages} setMessages={setMessages}
-       setGraphMode = {setGraphMode}/>}
+       setGraphMode = {setGraphMode} selectedPairIndex={selectedPairIndex}/>}
      </div>
            </>
   )
