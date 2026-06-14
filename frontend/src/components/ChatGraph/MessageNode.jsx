@@ -1,6 +1,25 @@
 import { Handle, Position } from "reactflow";
 
 function MessageNode({ data }) {
+
+      if (data.start) {
+        return (
+            
+            <div className="start-node">
+                <Handle
+                type="target"
+                position={Position.Top}
+            />
+                Start
+            <Handle
+                type="source"
+                position={Position.Bottom}
+            />
+
+            </div>
+        );
+    }
+
     return (
         <div className="message-card">
 
