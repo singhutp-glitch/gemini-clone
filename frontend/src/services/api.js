@@ -2,7 +2,7 @@
 export async function sendMessage(message)
 {
     const response = await fetch(
-        'http://localhost:3000/chat',
+        'http://localhost:3000/chats',
         {
             method:'POST',
             headers:{
@@ -21,7 +21,7 @@ export async function streamMessage(
     onChunk
 ) {
     const response = await fetch(
-        `http://localhost:3000/chat/${currentChatId}`,
+        `http://localhost:3000/chats/${currentChatId}/messages`,
         {
             method: "POST",
             headers: {
@@ -55,7 +55,7 @@ export async function streamMessage(
 
 export async function createNewChatId(prompt){
     const response = await fetch(
-        `http://localhost:3000/chat/new`,
+        `http://localhost:3000/chats/`,
         {
             method: "POST",
             headers: {
@@ -84,7 +84,7 @@ export async function getChats(){
 
 export async function getMessages(chatId){
     const response = await fetch(
-        `http://localhost:3000/chats/${chatId}`,
+        `http://localhost:3000/chats/${chatId}/messages`,
         {
             method: "GET",
         }

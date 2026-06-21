@@ -2,11 +2,11 @@ import express from 'express'
 const router = express.Router();
 import controller from '../controllers/chatController.js'
 
-router.post('/chat/new',controller.createChatPost);
-router.post('/chat/:chatId', controller.sendMessage);
+router.get('/', controller.loadChatsGet);
+router.post('/',controller.createChatPost);
 
-router.get('/chats', controller.loadChatsGet);
-router.get('/chats/:chatId', controller.loadMessagesGet);
+router.get('/:chatId/messages', controller.loadMessagesGet);
+router.post('/:chatId/messages', controller.sendMessage);
 
 
 export default router;
