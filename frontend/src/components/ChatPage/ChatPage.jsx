@@ -1,10 +1,10 @@
 import react,{ useState ,useEffect} from "react"
 import './ChatPage.css'
-import SideBar from "./components/SideBar/SideBar"
-import Main from "./components/Main/Main"
-import NavBar from "./components/NavBar/NavBar";
-import ChatGraph from "./components/ChatGraph/ChatGraph";
-import { getChats } from "./services/api";
+import SideBar from "../SideBar/SideBar"
+import Main from "../Main/Main"
+import NavBar from "../NavBar/NavBar";
+import ChatGraph from "../ChatGraph/ChatGraph";
+import { getChats } from "../../services/api.js";
 
 const ChatPage = () => {
    const [chats,setChats] = useState([]);

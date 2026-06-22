@@ -4,45 +4,14 @@ import NavBar from "./components/NavBar/NavBar";
 import ChatGraph from "./components/ChatGraph/ChatGraph";
 import { useState ,useEffect} from "react"
 import { getChats } from "./services/api";
+import ChatPage from "./components/ChatPage/ChatPage";
 
 function App() {
-  const [chats,setChats] = useState([]);
-  const [currentChatId, setCurrentChatId] = useState(null);
-  const [messages,setMessages] = useState([])
-  const [graphMode,setGraphMode] = useState(false);
-  const [selectedPairIndex,setSelectedPairIndex] = useState(null);
-
-  async function loadChats(){
-    const userChats = await getChats();
-    setChats(userChats);
-  };
-
-  useEffect(() => {
-    loadChats();
-
-  }, []);
-
-function handleCardClick(
-    pairIndex
-) {
-    setGraphMode(false);
-    setSelectedPairIndex(
-        pairIndex
-    );
-}
 
   return (
     <>
-     <SideBar chats = {chats} setChats = {setChats} setMessages={setMessages}
-     currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}/>
-     <div className="nav-main-section">
-       <NavBar setGraphMode={setGraphMode}/>
-       {graphMode?<ChatGraph messages = {messages} handleCardClick={handleCardClick}
-       />:<Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}
-       loadChats={loadChats} messages={messages} setMessages={setMessages}
-       setGraphMode = {setGraphMode} selectedPairIndex={selectedPairIndex}/>}
-     </div>
-           </>
+      <ChatPage/>
+    </>
   )
 }
 
