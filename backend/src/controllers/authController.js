@@ -105,7 +105,7 @@ const login = async (req,res) => {
     }
 }
 
-const sendUSerInfo = async(req,res)=>{
+const sendUserInfo = async(req,res)=>{
     try{
         const user = await prisma.user.findUnique({
             where:{

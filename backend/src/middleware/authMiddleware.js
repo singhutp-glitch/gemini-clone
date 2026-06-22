@@ -7,6 +7,7 @@ export function authMiddleware(req,res,next){
             error:'No token provided'
         })
     }
+    console.log('authheader exist');
     try{
         const token = authHeader.split(' ')[1];
 
