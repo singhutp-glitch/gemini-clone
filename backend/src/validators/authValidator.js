@@ -1,6 +1,10 @@
 import {body} from 'express-validator'
 
 const registerValidator = [
+    body('name')
+    .trim()
+  .isLength({min:3})
+  .withMessage("name must be at least 3 character long"),
     body("email")
   .trim()
   .notEmpty()
