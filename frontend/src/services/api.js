@@ -1,12 +1,14 @@
 
 export async function sendMessage(message)
 {
+    const token = localStorage.getItem('token');
     const response = await fetch(
         'http://localhost:3000/chats',
         {
             method:'POST',
             headers:{
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                Authorization:`Bearer ${token}`
             },
             body:JSON.stringify({
                 message,
@@ -20,6 +22,7 @@ export async function streamMessage(
     prompt,
     onChunk
 ) {
+    const token = localStorage.getItem('token');
     const response = await fetch(
         `http://localhost:3000/chats/${currentChatId}/messages`,
         {
@@ -27,6 +30,7 @@ export async function streamMessage(
             headers: {
                 "Content-Type":
                     "application/json",
+                    Authorization:`Bearer ${token}`
             },
             body: JSON.stringify({
                 message: prompt,
@@ -54,6 +58,7 @@ export async function streamMessage(
 }
 
 export async function createNewChatId(prompt){
+    const token = localStorage.getItem('token');
     const response = await fetch(
         `http://localhost:3000/chats/`,
         {
@@ -61,6 +66,7 @@ export async function createNewChatId(prompt){
             headers: {
                 "Content-Type":
                     "application/json",
+                    Authorization:`Bearer ${token}`
             },
             body: JSON.stringify({
                 message: prompt,
@@ -72,10 +78,14 @@ export async function createNewChatId(prompt){
 }
 
 export async function getChats(){
+    const token = localStorage.getItem('token');
     const response = await fetch(
         `http://localhost:3000/chats`,
         {
             method: "GET",
+            header:{
+                Authorization:`Bearer ${token}`
+            }
         }
     );
     const data = await response.json();
@@ -83,10 +93,14 @@ export async function getChats(){
 }
 
 export async function getMessages(chatId){
+    const token = localStorage.getItem('token');
     const response = await fetch(
         `http://localhost:3000/chats/${chatId}/messages`,
         {
             method: "GET",
+            header:{
+                Authorization:`Bearer ${token}`
+            }
         }
     );
     
