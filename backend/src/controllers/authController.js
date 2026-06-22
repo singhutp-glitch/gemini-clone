@@ -1,13 +1,14 @@
 import { validationResult } from "express-validator";
 import {prisma} from '../../lib/prisma.js'
 import bcrypt from 'bcrypt'
+import jwt from "jsonwebtoken";
 
 const register = async (req,res) => {
     const error = validationResult(req);
 
     if(!error.isEmpty()){
-        res.json({
-            error:error.status(400).array()
+        return res.status(400).json({
+            error:error.array()
         })
 
     }
@@ -20,7 +21,7 @@ const register = async (req,res) => {
             }
         });
         if(existingUser){
-            res.status(400).json({
+            return res.status(400).json({
                 error:'Email already exist'
             })
         }
@@ -44,6 +45,60 @@ const register = async (req,res) => {
         })
     }
 }
+
+
+const login = async (req,res) => {
+    const error = validationResult(req);
+
+    if(!error.isEmpty()){
+        return res.status(400).json({
+            error:error.array()
+        })
+
+    }
+    try{
+
+        const {email,password} = req.body;
+        const user = await prisma.user.findUnique({
+            where:{
+                email,
+            }
+        });
+        if(!user){
+            return res.status(401).json({
+                error:'Invalid credentials'
+            })
+        }
+        const passwordMatches = await bcrypt.compare(
+            password,
+            user.passwordHash
+        );
+
+        if (!passwordMatches) {
+            return res.status(401).json({
+                error: "Invalid credentials"
+            });
+        }
+        const token = jwt.sign({
+            userId:user.id
+        },
+            process.env.JWT_SECRET,
+        {
+            expiresIn:'7d'
+        }          
+    )
+        
+        res.json({
+            token,
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            error:'Error while loging user'
+        })
+    }
+}
+
 
 export default{
     register
