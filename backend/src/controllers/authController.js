@@ -105,8 +105,35 @@ const login = async (req,res) => {
     }
 }
 
+const sendUSerInfo = async(req,res)=>{
+    try{
+        const user = await prisma.user.findUnique({
+            where:{
+                id:req.user.userId
+            }
+        }) 
+        if(!user){
+            return res.status(404).json({
+                error:'User not found'
+            })
+        }
+        res.json({
+            id:user.id,
+            name:user.name,
+            email:user.email
+        })
+
+    }catch(error){
+        console.error(error);
+        res.status(500).json({
+            error:"Server error"
+        })
+    }
+}
+
 
 export default{
     register,
-    login
+    login,
+    sendUserInfo
 }
