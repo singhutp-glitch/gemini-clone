@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { registerUser } from "../../services/authApi";
 
 const RegisterPage = () => {
 const [name, setName] = useState("");
@@ -32,8 +33,8 @@ console.log({
   password,
 });
 
-// Later:
-// await fetch("", ...)
+const data = await registerUser(name,email,password);
+
 
 }
 

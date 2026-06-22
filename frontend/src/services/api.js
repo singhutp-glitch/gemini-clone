@@ -93,4 +93,3 @@ export async function getMessages(chatId){
     const data = await response.json();
     return data;
 }
-
