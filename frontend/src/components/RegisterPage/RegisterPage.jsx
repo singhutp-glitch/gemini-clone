@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../../services/authApi";
 
-const RegisterPage = () => {
+const RegisterPage = ({setAuthMode}) => {
 const [name, setName] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
@@ -71,6 +71,7 @@ return ( <div> <h1>Create Account</h1>
       Register
     </button>
   </form>
+  <button onClick={()=>{setAuthMode('login')}}>Login here</button>
 </div>
 
 );

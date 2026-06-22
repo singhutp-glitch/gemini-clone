@@ -10,13 +10,13 @@ import LoginPage from "./components/LoginPage/LoginPage";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [authMode, setAuthMode] = useState("register");
+  const [authMode, setAuthMode] = useState("login");
 
   return (
     <>
     {user?<ChatPage  user={user}/>:
-    authMode==='register'?<Register/>:
-    <LoginPage setUser={setUser}/>}
+    authMode==='register'?<Register setAuthMode={setAuthMode}/>:
+    <LoginPage setUser={setUser} setAuthMode={setAuthMode}/>}
     
     </>
   )

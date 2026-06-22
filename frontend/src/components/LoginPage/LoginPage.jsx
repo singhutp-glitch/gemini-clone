@@ -2,19 +2,21 @@ import React, { useState } from 'react'
 import './LoginPage.css'
 import { loginUser } from '../../services/authApi';
 
-const LoginPage = ({setUser}) => {
+const LoginPage = ({setUser,setAuthMode}) => {
 
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [error, setError] = useState("");
 
 async function handleSubmit(e) {
+  try{
+
     e.preventDefault();
-
+    
     setError("");
-
+    
     if (!email.includes("@")) {
-    setError("Please enter a valid email");
+      setError("Please enter a valid email");
     return;
     }
 
@@ -22,20 +24,20 @@ async function handleSubmit(e) {
     setError("Password must be at least 6 characters long");
     return;
     }
-
+    
     console.log({
     email,
     password,
-    });
+  });
 
-    const result = await loginUser(email,password);
-    if(!result.ok){
-        setError(result.data.error);
-        return
-    }
-    localStorage.setItem('toekn',result.data.token);
-    setUser(result.data.user);
-
+  const result = await loginUser(email,password);
+  
+  localStorage.setItem('token',result.token);
+  setUser(result.user);
+  
+}catch(error){
+  console.error(error);
+}
 }
 
 return ( <div> <h1>Login</h1>
@@ -63,6 +65,7 @@ return ( <div> <h1>Login</h1>
       Login
     </button>
   </form>
+  <button onClick={()=>{setAuthMode('register')}}>Register here</button>
 </div>
 
 );}
