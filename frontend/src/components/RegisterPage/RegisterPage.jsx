@@ -35,6 +35,7 @@ console.log({
 
 const data = await registerUser(name,email,password);
 
+setAuthMode('login');
 
 }
 

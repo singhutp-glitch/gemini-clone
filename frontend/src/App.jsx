@@ -15,7 +15,7 @@ function App() {
   return (
     <>
     {user?<ChatPage  user={user}/>:
-    authMode==='register'?<Register setAuthMode={setAuthMode}/>:
+    authMode==='register'?<Register setAuthMode={setAuthMode} />:
     <LoginPage setUser={setUser} setAuthMode={setAuthMode}/>}
     
     </>
