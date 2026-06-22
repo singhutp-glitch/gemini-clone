@@ -6,6 +6,7 @@ import { useState ,useEffect} from "react"
 import { getChats } from "./services/api";
 import ChatPage from "./components/ChatPage/ChatPage";
 import Register from './components/RegisterPage/RegisterPage'
+import LoginPage from "./components/LoginPage/LoginPage";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -13,9 +14,9 @@ function App() {
 
   return (
     <>
-    {user?<ChatPage/>:
+    {user?<ChatPage  user={user}/>:
     authMode==='register'?<Register/>:
-    ''}
+    <LoginPage setUser={setUser}/>}
     
     </>
   )

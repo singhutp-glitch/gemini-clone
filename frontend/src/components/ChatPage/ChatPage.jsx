@@ -6,7 +6,7 @@ import NavBar from "../NavBar/NavBar";
 import ChatGraph from "../ChatGraph/ChatGraph";
 import { getChats } from "../../services/api.js";
 
-const ChatPage = () => {
+const ChatPage = ({user}) => {
    const [chats,setChats] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages,setMessages] = useState([])
@@ -41,7 +41,8 @@ function handleCardClick(
        {graphMode?<ChatGraph messages = {messages} handleCardClick={handleCardClick}
        />:<Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}
        loadChats={loadChats} messages={messages} setMessages={setMessages}
-       setGraphMode = {setGraphMode} selectedPairIndex={selectedPairIndex}/>}
+       setGraphMode = {setGraphMode} selectedPairIndex={selectedPairIndex}
+       user={user}/>}
      </div>
            </>
   )

@@ -90,6 +90,11 @@ const login = async (req,res) => {
         
         res.json({
             token,
+            user:{
+                name,
+                email,
+                password,
+            }
         });
     }catch(error){
         console.log(error);

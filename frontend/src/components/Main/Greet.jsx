@@ -2,9 +2,9 @@ import React from 'react'
 import { assets } from '../../assets/assets'
 import './Main.css'
 
-const Greet = () => {
+const Greet = ({user}) => {
   return (<><div className="greet">
-                  <p><span>Hello, Dev</span></p>
+                  <p><span>Hello, {user.name}</span></p>
                   <p>How can i help you ?</p>
               </div>
               <div className="cards">

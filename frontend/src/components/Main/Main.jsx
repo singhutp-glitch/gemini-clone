@@ -9,7 +9,7 @@ import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from './Greet.jsx'
 
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
-    ,selectedPairIndex}) => {
+    ,selectedPairIndex,user}) => {
     const [prompt,setPrompt] = useState('');
     const bottomRef = useRef(null);
     
@@ -89,7 +89,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
   return (
     <div className='main'>
         <div className="main-container">
-          {messages.length === 0? <Greet/>: <ChatContainer messages = {messages}
+          {messages.length === 0? <Greet user={user}/>: <ChatContainer messages = {messages}
           selectedPairIndex={selectedPairIndex}/>}
         </div> 
         <div className="bottom">

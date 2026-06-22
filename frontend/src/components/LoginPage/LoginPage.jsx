@@ -1,40 +1,40 @@
 import React, { useState } from 'react'
 import './LoginPage.css'
+import { loginUser } from '../../services/authApi';
 
-const LoginPage = () => {
+const LoginPage = ({setUser}) => {
 
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [error, setError] = useState("");
 
 async function handleSubmit(e) {
-e.preventDefault();
+    e.preventDefault();
 
-setError("");
+    setError("");
 
-if (name.trim().length < 2) {
-  setError("Name must be at least 2 characters long");
-  return;
-}
+    if (!email.includes("@")) {
+    setError("Please enter a valid email");
+    return;
+    }
 
-if (!email.includes("@")) {
-  setError("Please enter a valid email");
-  return;
-}
+    if (password.length < 6) {
+    setError("Password must be at least 6 characters long");
+    return;
+    }
 
-if (password.length < 6) {
-  setError("Password must be at least 6 characters long");
-  return;
-}
+    console.log({
+    email,
+    password,
+    });
 
-console.log({
-  name,
-  email,
-  password,
-});
-
-const data = await registerUser(name,email,password);
-
+    const result = await loginUser(email,password);
+    if(!result.ok){
+        setError(result.data.error);
+        return
+    }
+    localStorage.setItem('toekn',result.data.token);
+    setUser(result.data.user);
 
 }
 
