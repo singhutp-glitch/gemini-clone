@@ -14,7 +14,7 @@ const sendMessage = async (req,res) => {
                 error:'Prompt is required'
             })
         }
-        const userChat = await searchChatIdwithUserId(1,chatId);
+        const userChat = await searchChatIdwithUserId(req.user.userId,chatId);
         if(!userChat){
             return res.status(404).json({
                 error:'Chat not found'
@@ -86,7 +86,7 @@ const createChatPost = async(req,res) => {
             })
         };
         
-        const chat = await createNewChat(1,prompt);
+        const chat = await createNewChat(req.user.userId,prompt);
         return res.json({
             chatId:chat.id
         });
@@ -101,7 +101,7 @@ const createChatPost = async(req,res) => {
 
 const loadChatsGet = async (req,res) => {
     try{
-        const userChats = await loadChats(1);
+        const userChats = await loadChats(req.user.userId);
         
         return res.json(userChats);
 
@@ -117,7 +117,7 @@ const loadMessagesGet = async (req,res) => {
     try{
         const chatId = +req.params.chatId;
 
-        const userChat = await searchChatIdwithUserId(1,chatId);
+        const userChat = await searchChatIdwithUserId(req.user.userId,chatId);
         if(!userChat){
             return res.status(404).json({
                 error:'Chat not found'
