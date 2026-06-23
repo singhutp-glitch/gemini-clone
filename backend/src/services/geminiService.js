@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import { SYSTEM_PROMPT } from "../prompts/chatPrompts.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -14,10 +15,7 @@ export async function generateResponseStream(contents) {
     contents,
 
     config: {
-      systemInstruction: `
-        You are a helpful AI assistant.
-        Answer clearly and accurately.
-      `,
+      systemInstruction: SYSTEM_PROMPT,
 
       maxOutputTokens: 1000,
 
