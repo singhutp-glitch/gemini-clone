@@ -3,7 +3,7 @@ import './SideBar.css'
 import {assets} from '../../assets/assets.js'
 import { getMessages } from '../../services/api.js';
 import UserProfile from '../UserProfile/UserProfile.jsx';
-const SideBar = ({user,chats,currentChatId,setCurrentChatId,setMessages}) => {
+const SideBar = ({user,onLogout,chats,currentChatId,setCurrentChatId,setMessages}) => {
   const [extended,setExtended] = useState(false);
   const handleNewChat = ()=>{
     setCurrentChatId(null);
@@ -40,8 +40,8 @@ const SideBar = ({user,chats,currentChatId,setCurrentChatId,setMessages}) => {
       </div>
       <div className='bottom'>
         <div className="bottom-item recent-entry">
-          <UserProfile user={user}/>
-          {extended?<p>Setting</p>:null}
+          <UserProfile user={user} onLogout={onLogout}/>
+          {extended?<p className='bottom-user-name'>{user.name}</p>:null}
         </div>
       </div>
     </div>

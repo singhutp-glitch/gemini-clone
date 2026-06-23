@@ -29,9 +29,14 @@ function App() {
   getUserInfo();
 }, []);
 
+function onLogout(){
+  localStorage.removeItem('token');
+  setUser(null)
+}
+
   return (
     <>
-    {user?<ChatPage  user={user}/>:
+    {user?<ChatPage onLogout={onLogout}  user={user}/>:
     authMode==='register'?<Register setAuthMode={setAuthMode} />:
     <LoginPage setUser={setUser} setAuthMode={setAuthMode}/>}
     

@@ -24,8 +24,8 @@
 .profile-menu {
   position: absolute;
 
-  top: 50px;
-  right: 0;
+  bottom: 50px;
+  left: 100;
 
   min-width: 220px;
 
@@ -33,7 +33,7 @@
 
   border-radius: 8px;
 
-  background: white;
+  background: rgb(178, 169, 169);
 
   box-shadow:
     0 4px 10px rgba(0,0,0,0.15);

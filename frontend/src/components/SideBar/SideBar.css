@@ -69,4 +69,11 @@
 .side-bar .bottom-item{
     padding-right: 0px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.bottom-user-name{
+    font-size: 22px;
+    padding-right: 40px;
 }
