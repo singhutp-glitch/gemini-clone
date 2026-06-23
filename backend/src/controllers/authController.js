@@ -48,7 +48,6 @@ const register = async (req,res) => {
 
 
 const login = async (req,res) => {
-    console.log('login function')
     const error = validationResult(req);
 
     if(!error.isEmpty()){
@@ -58,7 +57,6 @@ const login = async (req,res) => {
 
     }
     try{
-        console.log('login req validated')
         const {email,password} = req.body;
         const user = await prisma.user.findUnique({
             where:{
@@ -88,7 +86,6 @@ const login = async (req,res) => {
             expiresIn:'7d'
         }          
     )
-        console.log('token created');
         res.json({
             token,
             user:{

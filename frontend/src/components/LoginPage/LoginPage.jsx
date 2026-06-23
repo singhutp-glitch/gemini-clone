@@ -24,11 +24,7 @@ async function handleSubmit(e) {
     setError("Password must be at least 6 characters long");
     return;
     }
-    
-    console.log({
-    email,
-    password,
-  });
+
 
   const result = await loginUser(email,password);
   

@@ -27,11 +27,6 @@ if (password.length < 6) {
   return;
 }
 
-console.log({
-  name,
-  email,
-  password,
-});
 
 const data = await registerUser(name,email,password);
 
