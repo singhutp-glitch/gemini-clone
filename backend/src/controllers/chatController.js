@@ -102,7 +102,6 @@ const createChatPost = async(req,res) => {
 const loadChatsGet = async (req,res) => {
     try{
         const userChats = await loadChats(req.user.userId);
-        
         return res.json(userChats);
 
     }catch(error){

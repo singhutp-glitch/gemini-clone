@@ -4,7 +4,7 @@ import './Main.css'
 
 const Greet = ({user}) => {
   return (<><div className="greet">
-                  <p><span>Hello, {user.name}</span></p>
+                  <p><span>Hello, {user.name.split(' ')[0]}</span></p>
                   <p>How can i help you ?</p>
               </div>
               <div className="cards">

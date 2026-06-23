@@ -83,7 +83,9 @@ export async function getChats(){
         `http://localhost:3000/chats`,
         {
             method: "GET",
-            header:{
+            headers:{
+                "Content-Type":
+                    "application/json",
                 Authorization:`Bearer ${token}`
             }
         }
@@ -98,7 +100,7 @@ export async function getMessages(chatId){
         `http://localhost:3000/chats/${chatId}/messages`,
         {
             method: "GET",
-            header:{
+            headers:{
                 Authorization:`Bearer ${token}`
             }
         }

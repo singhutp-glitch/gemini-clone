@@ -15,7 +15,7 @@ const ChatContainer = ({messages,selectedPairIndex}) => {
     pairRefs.current[
         selectedPairIndex
     ]?.scrollIntoView({
-        behavior: "smooth",
+        behavior: "auto",
         block: "center",
     });
 

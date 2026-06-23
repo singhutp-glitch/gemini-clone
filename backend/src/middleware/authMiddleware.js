@@ -7,17 +7,16 @@ export function authMiddleware(req,res,next){
             error:'No token provided'
         })
     }
-    console.log('authheader exist');
+
     try{
         const token = authHeader.split(' ')[1];
 
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
         req.user = decoded;
-        console.log(req.user.userId)
         next();
     }catch(error){
         console.error(error)
-        res.status(401).json({
+        res.status(404).json({
             error:'Invalid token'
         })
     }
