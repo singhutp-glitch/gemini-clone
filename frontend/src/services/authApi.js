@@ -40,7 +40,7 @@ export async function loginUser(email,password){
 
 export async function getUser(){
     const token = localStorage.getItem('token');
-    const user = await fetch(
+    const result = await fetch(
         `http://localhost:3000/auth/me`,
         {
             method: "GET",
@@ -51,5 +51,7 @@ export async function getUser(){
             },
         }
     );
+    const user = await result.json()
     return user;
+    
 }
