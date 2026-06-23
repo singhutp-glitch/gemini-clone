@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import './SideBar.css'
 import {assets} from '../../assets/assets.js'
 import { getMessages } from '../../services/api.js';
-const SideBar = ({chats,currentChatId,setCurrentChatId,setMessages}) => {
+import UserProfile from '../UserProfile/UserProfile.jsx';
+const SideBar = ({user,chats,currentChatId,setCurrentChatId,setMessages}) => {
   const [extended,setExtended] = useState(false);
   const handleNewChat = ()=>{
     setCurrentChatId(null);
@@ -39,15 +40,7 @@ const SideBar = ({chats,currentChatId,setCurrentChatId,setMessages}) => {
       </div>
       <div className='bottom'>
         <div className="bottom-item recent-entry">
-          <img src={assets.question_icon} alt="" />
-          {extended?<p>Help</p>:null}
-        </div>
-        <div className="bottom-item recent-entry">
-          <img src={assets.history_icon} alt="" />
-          {extended?<p>Activity</p>:null}
-        </div>
-        <div className="bottom-item recent-entry">
-          <img src={assets.setting_icon} alt="" />
+          <UserProfile user={user}/>
           {extended?<p>Setting</p>:null}
         </div>
       </div>

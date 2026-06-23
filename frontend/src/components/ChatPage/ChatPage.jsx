@@ -34,7 +34,7 @@ function handleCardClick(
 
   return (
     <>
-     <SideBar chats = {chats} setMessages={setMessages}
+     <SideBar user={user} chats = {chats} setMessages={setMessages}
      currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}/>
      <div className="nav-main-section">
        <NavBar setGraphMode={setGraphMode}/>
