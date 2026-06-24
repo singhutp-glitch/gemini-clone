@@ -12,6 +12,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,selectedPairIndex,user}) => {
     const [prompt,setPrompt] = useState('');
     const [webSearch,setWebSearch] = useState(false);
+    const [sources,setSources] = useState([])
     const bottomRef = useRef(null);
     
 
@@ -79,6 +80,10 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                 });
                     return updated;
                 });
+            },
+            sources => {
+
+                setSources(sources);
             }
         );
         
@@ -92,7 +97,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     <div className='main'>
         <div className="main-container">
           {messages.length === 0? <Greet user={user}/>: <ChatContainer messages = {messages}
-          selectedPairIndex={selectedPairIndex}/>}
+          selectedPairIndex={selectedPairIndex} sources={sources}/>}
         </div> 
         <div className="bottom">
             <div className="main-bottom">

@@ -21,7 +21,8 @@ export async function streamMessage(
     currentChatId,
     webSearch,
     prompt,
-    onChunk
+    onChunk,
+    onSource
 ) {
     console.log("web search:",webSearch);
     const token = localStorage.getItem('token');
@@ -46,6 +47,8 @@ export async function streamMessage(
 
     const decoder =
         new TextDecoder();
+    
+    let buffer = '';
 
     while (true) {
         const { done, value } =
@@ -53,10 +56,45 @@ export async function streamMessage(
 
         if (done) break;
 
-        const chunk =
+        buffer +=
             decoder.decode(value);
 
-        onChunk(chunk);
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+
+        for(const line of lines){
+            if(!line.trim()) continue; 
+            try{
+                const data = JSON.parse(line);
+                
+                if(data.type === 'sources'){
+                    console.log("sources:",data.sources);
+                    onSource(data.sources);
+                }
+                
+                if(data.type === 'token'){
+                    onChunk(data.text);
+                }
+            }catch(error){
+                console.error('Failed to parse:',line);
+            }
+        }
+         if(buffer.trim()){ 
+            try{
+                const data = JSON.parse(buffer);
+                
+                if(data.type === 'sources'){
+                    console.log("sources:",data.sources);
+                    onSource(data.sources);
+                }
+                
+                if(data.type === 'token'){
+                    onChunk(data.text);
+                }
+            }catch(error){
+                console.error('Failed to parse:',buffer);
+            }
+        }
     }
 }
 

@@ -6,10 +6,14 @@ import { searchChatIdwithUserId } from "../services/databaseService.js";
 import { loadChats } from "../services/databaseService.js";
 import { buildContext } from "../services/chatContextBuilder.js";
 const sendMessage = async (req,res) => {
+
+    let fullResponse = "";
+    let superChatId=0
     try{
         const prompt = req.body.message;
         const webSearch = req.body.webSearch;
         const chatId = +req.params.chatId;
+        superChatId=chatId;
         
         if(!prompt?.trim()){
             return res.status(400).json({
@@ -34,21 +38,28 @@ const sendMessage = async (req,res) => {
         const {contents,sources} = await buildContext(prompt,messages,{webSearch});
        console.log('content:\n',contents);
        console.log('sources:\n',sources);
+       const sourceData = JSON.stringify(
+        {
+            type:'sources',
+            sources
+        })
         const stream =
             await generateResponseStream(
                 contents
             );
 
-        let fullResponse = "";
-
+        res.write(`${sourceData}\n`);
         for await (const chunk of stream) {
 
             const text =
                 chunk.text || "";
 
             fullResponse += text;
-
-            res.write(text);
+            const textData = JSON.stringify({
+                type:'token',
+                text,
+            })
+            res.write(`${textData}\n`);
         }
         await saveMessages(
             chatId,
@@ -59,11 +70,25 @@ const sendMessage = async (req,res) => {
         res.end();
                 
     }catch(error){
-        console.error(error);
-        res.status(500).json({
-            error:'Failed to generate response'
-        })
+    console.error(error);
+
+    if(fullResponse.length > 0){
+        await saveMessages(
+            superChatId,
+            "assistant",
+            fullResponse +
+            "\n\n[Response interrupted]"
+        );
+    }else{
+        await saveMessages(
+            superChatId,
+            "assistant",
+            "Failed to generate response"
+        );
     }
+
+    res.end();
+}
 };
 
 const createChatPost = async(req,res) => {
