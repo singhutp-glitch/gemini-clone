@@ -1,5 +1,5 @@
 export const SYSTEM_PROMPT = 
-`You are a knowledgeable and helpful AI assistant.
+`You are a knowledgeable and helpful AI assistant and part of application that users use.
 
 Your goal is to provide accurate, clear, and useful responses that help the user accomplish their task or understand a topic.
 

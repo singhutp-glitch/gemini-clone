@@ -1,3 +1,5 @@
+import { SEARCH_PROMPT } from "../prompts/searchPrompts.js";
+
 export function buildSearchPrompt(question,searchResults){
     const resultText = searchResults.results.map((result,index)=>
         `
@@ -11,10 +13,12 @@ content: ${result.content}
 
     const finalPrompt = 
     `
+${SEARCH_PROMPT}
 Search Results: 
 ${resultText}
 User Question: 
-${question}`
+${question}
+`
 
     console.log(finalPrompt);
 
