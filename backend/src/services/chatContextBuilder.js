@@ -1,8 +1,8 @@
 import { searchWeb } from "./searchService.js";
 import { buildSearchPrompt } from "./promptBuilder.js";
 
-export async function buildContent(prompt,messages,options){
-
+export async function buildContext(prompt,messages,options){
+    let sources = [];
     const contents =
         messages.map(message => ({
             role:
@@ -29,6 +29,14 @@ export async function buildContent(prompt,messages,options){
                         text:finalPrompt,
                     },],
                 }
+                sources = searchResults.results.map((result,index)=>{
+                    return {
+                        id:index,
+                        title:result.title,
+                        url:result.url
+                    }
+                })
+            
         }
-        return contents
+        return {contents,sources}
 }

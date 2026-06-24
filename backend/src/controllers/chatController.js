@@ -4,7 +4,7 @@ import { createNewChat } from "../services/databaseService.js";
 import { loadMessages } from "../services/databaseService.js";
 import { searchChatIdwithUserId } from "../services/databaseService.js";
 import { loadChats } from "../services/databaseService.js";
-import { buildContent } from "../services/contentBuilder.js";
+import { buildContext } from "../services/chatContextBuilder.js";
 const sendMessage = async (req,res) => {
     try{
         const prompt = req.body.message;
@@ -31,8 +31,9 @@ const sendMessage = async (req,res) => {
 
         const messages = await loadMessages(chatId);
 
-        const contents = await buildContent(prompt,messages,{webSearch});
-       console.log(contents);
+        const {contents,sources} = await buildContext(prompt,messages,{webSearch});
+       console.log('content:\n',contents);
+       console.log('sources:\n',sources);
         const stream =
             await generateResponseStream(
                 contents
