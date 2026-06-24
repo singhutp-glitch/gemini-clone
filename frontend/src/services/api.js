@@ -19,9 +19,11 @@ export async function sendMessage(message)
 
 export async function streamMessage(
     currentChatId,
+    webSearch,
     prompt,
     onChunk
 ) {
+    console.log("web search:",webSearch);
     const token = localStorage.getItem('token');
     const response = await fetch(
         `http://localhost:3000/chats/${currentChatId}/messages`,
@@ -34,6 +36,7 @@ export async function streamMessage(
             },
             body: JSON.stringify({
                 message: prompt,
+                webSearch,
             }),
         }
     );

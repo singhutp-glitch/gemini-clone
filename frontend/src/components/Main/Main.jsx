@@ -11,6 +11,7 @@ import Greet from './Greet.jsx'
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,selectedPairIndex,user}) => {
     const [prompt,setPrompt] = useState('');
+    const [webSearch,setWebSearch] = useState(false);
     const bottomRef = useRef(null);
     
 
@@ -53,6 +54,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 
         await streamMessage(
             chatId,
+            webSearch,
             currentPrompt,
             chunk => {
 
@@ -94,6 +96,11 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         </div> 
         <div className="bottom">
             <div className="main-bottom">
+                <label className='web-search-box'>
+                    Web Search
+                    <input type="checkbox" checked={webSearch} 
+                    onChange={(e) =>setWebSearch(e.target.checked)}/>
+                </label>
                 <div className="search-box">
                     <input onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e) => {
         if (e.key === "Enter") {

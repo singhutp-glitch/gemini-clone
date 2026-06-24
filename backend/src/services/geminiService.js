@@ -9,6 +9,7 @@ const ai = new GoogleGenAI({
 });
 
 export async function generateResponseStream(contents) {
+  console.log("gemini api hit");
   const stream = await ai.models.generateContentStream({
     model: "gemini-3.1-flash-lite",
 

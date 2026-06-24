@@ -4,9 +4,11 @@ import { createNewChat } from "../services/databaseService.js";
 import { loadMessages } from "../services/databaseService.js";
 import { searchChatIdwithUserId } from "../services/databaseService.js";
 import { loadChats } from "../services/databaseService.js";
+import { buildContent } from "../services/contentBuilder.js";
 const sendMessage = async (req,res) => {
     try{
         const prompt = req.body.message;
+        const webSearch = req.body.webSearch;
         const chatId = +req.params.chatId;
         
         if(!prompt?.trim()){
@@ -27,27 +29,13 @@ const sendMessage = async (req,res) => {
             prompt
         );
 
-        const messages =
-            await loadMessages(chatId);
+        const messages = await loadMessages(chatId);
 
-        const geminiContents =
-            messages.map(message => ({
-                role:
-                    message.role ===
-                    "assistant"
-                        ? "model"
-                        : "user",
-
-                parts: [
-                    {
-                        text:
-                            message.content,
-                    },
-                ],
-            }));
+        const contents = await buildContent(prompt,messages,{webSearch});
+       console.log(contents);
         const stream =
             await generateResponseStream(
-                geminiContents
+                contents
             );
 
         let fullResponse = "";
