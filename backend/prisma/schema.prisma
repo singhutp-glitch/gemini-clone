@@ -47,6 +47,7 @@ model Message {
 
   role         String   @db.VarChar(20)
   content      String
+  sources      Json?
 
   createdAt    DateTime @default(now())
 

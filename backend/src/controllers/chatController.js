@@ -6,7 +6,7 @@ import { searchChatIdwithUserId } from "../services/databaseService.js";
 import { loadChats } from "../services/databaseService.js";
 import { buildContext } from "../services/chatContextBuilder.js";
 const sendMessage = async (req,res) => {
-
+        let superSources;
     let fullResponse = "";
     let superChatId=0
     try{
@@ -38,6 +38,8 @@ const sendMessage = async (req,res) => {
         const {contents,sources} = await buildContext(prompt,messages,{webSearch});
        console.log('content:\n',contents);
        console.log('sources:\n',sources);
+       superSources = sources;
+
        const sourceData = JSON.stringify(
         {
             type:'sources',
@@ -64,7 +66,8 @@ const sendMessage = async (req,res) => {
         await saveMessages(
             chatId,
             "assistant",
-            fullResponse
+            fullResponse,
+            sources
         );
 
         res.end();
@@ -77,7 +80,8 @@ const sendMessage = async (req,res) => {
             superChatId,
             "assistant",
             fullResponse +
-            "\n\n[Response interrupted]"
+            "\n\n[Response interrupted]",
+            superSources
         );
     }else{
         await saveMessages(
