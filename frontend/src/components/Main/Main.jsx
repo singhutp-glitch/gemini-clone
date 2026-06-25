@@ -12,7 +12,6 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,selectedPairIndex,user}) => {
     const [prompt,setPrompt] = useState('');
     const [webSearch,setWebSearch] = useState(false);
-    const [sources,setSources] = useState([])
     const bottomRef = useRef(null);
     
 
@@ -30,7 +29,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         {
             role: "assistant",
             content: "",
-            loading: true
+            loading: true,
+            sources:[]
         },
     ]);
 
@@ -82,8 +82,18 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                 });
             },
             sources => {
+                setMessages(prev => {
 
-                setSources(sources);
+                    const updated = [...prev];
+
+                    updated[updated.length - 1] = {
+                        ...updated[updated.length - 1],
+                        sources
+                    };
+
+                    return updated;
+                });
+            
             }
         );
         
@@ -97,7 +107,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     <div className='main'>
         <div className="main-container">
           {messages.length === 0? <Greet user={user}/>: <ChatContainer messages = {messages}
-          selectedPairIndex={selectedPairIndex} sources={sources}/>}
+          selectedPairIndex={selectedPairIndex}/>}
         </div> 
         <div className="bottom">
             <div className="main-bottom">

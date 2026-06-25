@@ -31,7 +31,6 @@ export async function buildContext(prompt,messages,options){
                 }
                 sources = searchResults.results.map((result,index)=>{
                     return {
-                        id:index,
                         title:result.title,
                         url:result.url
                     }

@@ -39,23 +39,23 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
 
      <div className="message-content">
 
-  {(messages.length - 1 === index) &&
-   sources.length > 0 && (
-    <div className="sources-container">
-      Sources:
-      {sources.map((source, sourceIndex) => (
+ {message.role === "assistant" &&
+ message.sources?.length > 0 && (
+  <div className="sources-container">
+    <div>Sources:</div>
+    {message.sources.map((source) => (
+      <div key={source.url}>
         <a
-          key={source.url}
-          className="source"
           href={source.url}
           target="_blank"
           rel="noopener noreferrer"
         >
           {source.title}
         </a>
-      ))}
-    </div>
-  )}
+      </div>
+    ))}
+  </div>
+)}
 
   {message.loading
     ? "Thinking..."

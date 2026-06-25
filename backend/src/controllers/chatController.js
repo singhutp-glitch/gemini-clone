@@ -63,6 +63,7 @@ const sendMessage = async (req,res) => {
             })
             res.write(`${textData}\n`);
         }
+        console.log("souces before save:",sources);
         await saveMessages(
             chatId,
             "assistant",
