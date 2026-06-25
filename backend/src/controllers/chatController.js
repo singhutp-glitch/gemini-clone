@@ -102,6 +102,9 @@ const sendMessage = async (req,res) => {
             "Failed to generate response"
         );
     }
+    res.write(`${JSON.stringify({
+                type:'error',
+                error:'Failed to generate response',})}\n`);
 
     res.end();
 }

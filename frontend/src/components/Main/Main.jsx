@@ -31,7 +31,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
             content: "",
             loading: true,
             sources:[],
-            status:'Thinking...'
+            status:'Thinking...',
         },
     ]);
 
@@ -105,6 +105,23 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                     updated[updated.length - 1] = {
                         ...updated[updated.length - 1],
                         status
+                    };
+
+                    return updated;
+                });
+            
+            },
+            error=> {
+                accumulated += error;
+                setMessages(prev => {
+
+                    const updated = [...prev];
+
+                    updated[updated.length - 1] = {
+                        ...updated[updated.length - 1],
+                        content:accumulated,
+                        loading:false
+
                     };
 
                     return updated;

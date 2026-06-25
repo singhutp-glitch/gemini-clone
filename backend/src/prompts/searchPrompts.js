@@ -15,9 +15,4 @@ Findings:
 Conclusion:
 
 * Best answer supported by the findings
-
-Uncertainties:
-
-* What cannot be determined from the available evidence 
-for the user question if any 
 `;
