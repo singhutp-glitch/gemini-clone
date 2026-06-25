@@ -30,7 +30,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
             role: "assistant",
             content: "",
             loading: true,
-            sources:[]
+            sources:[],
+            status:'Thinking...'
         },
     ]);
 
@@ -88,7 +89,22 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 
                     updated[updated.length - 1] = {
                         ...updated[updated.length - 1],
-                        sources
+                        sources,
+                        loading:false
+                    };
+
+                    return updated;
+                });
+            
+            },
+            status => {
+                setMessages(prev => {
+
+                    const updated = [...prev];
+
+                    updated[updated.length - 1] = {
+                        ...updated[updated.length - 1],
+                        status
                     };
 
                     return updated;

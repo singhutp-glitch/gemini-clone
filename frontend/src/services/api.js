@@ -22,7 +22,8 @@ export async function streamMessage(
     webSearch,
     prompt,
     onChunk,
-    onSource
+    onSource,
+    onStatus
 ) {
     console.log("web search:",webSearch);
     const token = localStorage.getItem('token');
@@ -74,6 +75,9 @@ export async function streamMessage(
                 
                 if(data.type === 'token'){
                     onChunk(data.text);
+                }
+                if(data.type === 'status'){
+                    onStatus(data.status);
                 }
             }catch(error){
                 console.error('Failed to parse:',line);

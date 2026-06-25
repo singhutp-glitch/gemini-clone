@@ -35,6 +35,13 @@ const sendMessage = async (req,res) => {
 
         const messages = await loadMessages(chatId);
 
+        if(webSearch){
+            res.write(`${JSON.stringify({
+                type:'status',
+                status:"Searching..."
+            })}\n`);
+        }
+
         const {contents,sources} = await buildContext(prompt,messages,{webSearch});
        console.log('content:\n',contents);
        console.log('sources:\n',sources);

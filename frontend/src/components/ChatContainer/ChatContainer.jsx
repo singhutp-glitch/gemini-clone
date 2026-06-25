@@ -57,17 +57,17 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
   </div>
 )}
 
-  {message.loading
-    ? "Thinking..."
+  {
+  message.loading
+    ? message.status
     : (
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-      >
-        {message.content}
-      </ReactMarkdown>
-    )
-  }
-
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+        >
+          {message.content}
+        </ReactMarkdown>
+      )
+}
 </div>
     </div>
   ))}
