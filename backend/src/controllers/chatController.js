@@ -43,7 +43,11 @@ const sendMessage = async (req,res) => {
         }
 
         const {contents,sources} = await buildContext(prompt,messages,{webSearch});
-       console.log('content:\n',contents);
+        res.write(`${JSON.stringify({
+                type:'status',
+                status:"Generating..."
+            })}\n`);
+        console.log('content:\n',contents);
        console.log('sources:\n',sources);
        superSources = sources;
 
