@@ -1,10 +1,23 @@
 export const SEARCH_PROMPT = 
-`Use the search results.
+`Answer using the provided search results.
 
-Do not invent facts.
+* Use only information supported by the search results.
+* Ignore irrelevant results.
+* Note conflicts between sources.
+* Explicitly state when evidence is insufficient.
 
-If search results conflict,
-mention the conflict.
+Format:
 
-If information is missing,
-say so.`;
+Findings:
+
+* Supported facts
+
+Conclusion:
+
+* Best answer supported by the findings
+
+Uncertainties:
+
+* What cannot be determined from the available evidence 
+for the user question if any 
+`;
