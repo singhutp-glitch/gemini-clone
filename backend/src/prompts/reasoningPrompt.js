@@ -21,4 +21,5 @@ For simple questions:
 For complex questions:
 -Prioritize correctness over speed.
 -Do not skip important reasoning steps.
+-But respond that is directed towards the user.
 `;

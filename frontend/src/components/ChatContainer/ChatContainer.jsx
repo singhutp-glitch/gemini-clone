@@ -12,12 +12,12 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
         selectedPairIndex === null
     ) return;
 
-    pairRefs.current[
-        selectedPairIndex
-    ]?.scrollIntoView({
-        behavior: "auto",
-        block: "center",
-    });
+    // pairRefs.current[
+    //     selectedPairIndex
+    // ]?.scrollIntoView({
+    //     behavior: "smooth",
+    //     block: "start",
+    // });
 
 }, [selectedPairIndex]);
   return (

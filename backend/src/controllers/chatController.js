@@ -41,13 +41,13 @@ const sendMessage = async (req,res) => {
                 type:'status',
                 status:"Searching..."
             })}\n`);
-        }
+        }else{
         if(reasoning){
             res.write(`${JSON.stringify({
                 type:'status',
                 status:"Reasoning..."
             })}\n`);
-        }
+        }};
 
         const {contents,sources} = await buildContext(prompt,messages,
             {webSearch,reasoning});
@@ -55,6 +55,11 @@ const sendMessage = async (req,res) => {
         res.write(`${JSON.stringify({
                 type:'status',
                 status:"Generating..."
+            })}\n`);
+        }else{
+            res.write(`${JSON.stringify({
+                type:'status',
+                status:"Reasoning..."
             })}\n`);
         }
 
@@ -87,7 +92,6 @@ const sendMessage = async (req,res) => {
             })
             res.write(`${textData}\n`);
         }
-        console.log("souces before save:",sources);
         await saveMessages(
             chatId,
             "assistant",

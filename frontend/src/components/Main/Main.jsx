@@ -78,9 +78,10 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                         loading: false,
                     };
 
-                    bottomRef.current?.scrollIntoView({
-                    behavior: "smooth",
-                });
+                //     bottomRef.current?.scrollIntoView({
+                //     behavior: "auto",
+                //     block: "end",
+                // });
                     return updated;
                 });
             },

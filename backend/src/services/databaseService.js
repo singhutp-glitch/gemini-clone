@@ -1,7 +1,6 @@
 import {prisma} from '../../lib/prisma.js';
 
 export async function saveMessages(chatId,role,content,sources=null){
-    console.log("sources inside prisma function:",sources);
     await prisma.message.create({
         data:{
             chatId,
