@@ -34,8 +34,21 @@ const sendMessage = async (req,res) => {
             prompt
         );
 
+
         const messages = await loadMessages(chatId);
 
+        const context = {
+            userMessages:messages,
+            userPromot:prompt,
+            options:{
+                webSearch,
+                reasoning
+            },
+            searchResults:null,
+            searchSources:null,
+            promptSections:[],
+            
+        }
         if(webSearch){
             res.write(`${JSON.stringify({
                 type:'status',
