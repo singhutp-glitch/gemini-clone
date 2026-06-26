@@ -12,6 +12,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,selectedPairIndex,user}) => {
     const [prompt,setPrompt] = useState('');
     const [webSearch,setWebSearch] = useState(false);
+    const [reasoning,setReasoning] = useState(false);
     const bottomRef = useRef(null);
     
 
@@ -57,6 +58,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         await streamMessage(
             chatId,
             webSearch,
+            reasoning,
             currentPrompt,
             chunk => {
 
@@ -148,6 +150,11 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                     Web Search
                     <input type="checkbox" checked={webSearch} 
                     onChange={(e) =>setWebSearch(e.target.checked)}/>
+                </label>
+                <label className='reasoning-box'>
+                    Reasoning
+                    <input type="checkbox" checked={reasoning} 
+                    onChange={(e) =>setReasoning(e.target.checked)}/>
                 </label>
                 <div className="search-box">
                     <input onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e) => {

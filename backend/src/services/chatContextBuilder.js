@@ -1,7 +1,8 @@
 import { searchWeb } from "./searchService.js";
 import { buildSearchPrompt } from "./promptBuilder.js";
+import { buildReasoningPrompt } from "./promptBuilder.js";
 
-export async function buildContext(prompt,messages,options){
+export async function buildContext(userPrompt,messages,options){
     let sources = [];
     const contents =
         messages.map(message => ({
@@ -18,9 +19,9 @@ export async function buildContext(prompt,messages,options){
                 },
             ],
         }));
-        if(options.webSearch){
-            const searchResults = await searchWeb(prompt);
-            const finalPrompt = buildSearchPrompt(prompt,searchResults);
+        if(options.webSearch && !options.reasoning){
+            const searchResults = await searchWeb(userPrompt);
+            const finalPrompt = buildSearchPrompt(userPrompt,searchResults);
             contents[contents.length-1] = {
                 role:"user",
 
@@ -37,5 +38,18 @@ export async function buildContext(prompt,messages,options){
                 })
             
         }
+        if(!options.webSearch && options.reasoning){
+            const finalPrompt = buildReasoningPrompt(userPrompt);
+            contents[contents.length-1] = {
+                role:"user",
+
+                parts: [
+                    {
+                        text:finalPrompt,
+                    },],
+                }
+        }
+
+
         return {contents,sources}
 }

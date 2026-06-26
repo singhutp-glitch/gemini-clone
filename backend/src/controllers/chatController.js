@@ -6,12 +6,13 @@ import { searchChatIdwithUserId } from "../services/databaseService.js";
 import { loadChats } from "../services/databaseService.js";
 import { buildContext } from "../services/chatContextBuilder.js";
 const sendMessage = async (req,res) => {
-        let superSources;
+        let superSources=[];
     let fullResponse = "";
     let superChatId=0
     try{
         const prompt = req.body.message;
         const webSearch = req.body.webSearch;
+        const reasoning = req.body.reasoning;
         const chatId = +req.params.chatId;
         superChatId=chatId;
         
@@ -41,27 +42,39 @@ const sendMessage = async (req,res) => {
                 status:"Searching..."
             })}\n`);
         }
+        if(reasoning){
+            res.write(`${JSON.stringify({
+                type:'status',
+                status:"Reasoning..."
+            })}\n`);
+        }
 
-        const {contents,sources} = await buildContext(prompt,messages,{webSearch});
+        const {contents,sources} = await buildContext(prompt,messages,
+            {webSearch,reasoning});
+        if(!reasoning){
         res.write(`${JSON.stringify({
                 type:'status',
                 status:"Generating..."
             })}\n`);
+        }
+
         console.log('content:\n',contents);
        console.log('sources:\n',sources);
-       superSources = sources;
-
-       const sourceData = JSON.stringify(
-        {
-            type:'sources',
-            sources
-        })
+       
         const stream =
             await generateResponseStream(
                 contents
             );
+            if(webSearch){
+                superSources = sources;
 
-        res.write(`${sourceData}\n`);
+                const sourceData = JSON.stringify(
+                {
+                        type:'sources',
+                        sources
+                }) 
+                res.write(`${sourceData}\n`);
+            }
         for await (const chunk of stream) {
 
             const text =
