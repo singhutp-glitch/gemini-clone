@@ -47,8 +47,31 @@ const sendMessage = async (req,res) => {
             searchResults:null,
             searchSources:null,
             promptSections:[],
-            
-        }
+            statuses:[],
+            metaData:{},
+            stream:res,
+            exection:{
+                session:{
+                    conversation:messages,
+                },
+                request:{
+                    runtime: {
+                        enabledCapabilities: []
+                    },
+
+                    instructions: {},
+
+                    resources: {},
+
+                    task: {
+                        objective:"Answer the user's question.",
+
+                        input:messages,
+                    }
+                }
+            }
+        };
+        
         if(webSearch){
             res.write(`${JSON.stringify({
                 type:'status',

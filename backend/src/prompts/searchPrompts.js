@@ -5,16 +5,6 @@ export const SEARCH_PROMPT =
 * Ignore irrelevant results.
 * Note conflicts between sources.
 * Explicitly state when evidence is insufficient.
-
-Format:
-
-Findings:
-
-* Supported facts
-
-Conclusion:
-
-* Best answer supported by the findings
 `;
 
 export const SEARCH_REASON_PROMPT = 
