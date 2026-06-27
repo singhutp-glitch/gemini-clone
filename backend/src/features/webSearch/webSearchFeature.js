@@ -1,5 +1,5 @@
-import { searchWeb } from "../../services/searchService";
-import { SEARCH_PROMPT } from "../../prompts/searchPrompts";
+import { searchWeb } from "../../services/searchService.js";
+import { SEARCH_PROMPT } from "../../prompts/searchPrompts.js";
 
 const  webSearchFeature = {
     name:'webSearch',
@@ -9,7 +9,10 @@ const  webSearchFeature = {
     },
 
     async execute(context){
-        context.stream.write('Searching...');
+        context.stream.write(`${JSON.stringify({
+                type:'status',
+                status:"Searching..."
+            })}\n`);
         const feature = {};
         const searchResults = await searchWeb(context.userPrompt);
          const resultText = searchResults.results.map((result,index)=>
@@ -31,7 +34,7 @@ content: ${result.content}
         feature.name = 'webSearch';
         feature.instruction = SEARCH_PROMPT;
         feature.resource = resultText;
-        context.feature.push(feature);
+        context.features.push(feature);
     }
 }
 

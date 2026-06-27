@@ -8,7 +8,7 @@ if(context.features.length>0){
     ${feature.instruction}
     </instruction>
     <resource>
-    ${feature.resource}
+    ${feature.resource?feature.resource:`None`}
     </resource>
     </${feature.name}>
     `); 

@@ -1,4 +1,4 @@
-import { buildPrompt } from "./promptBuilder";
+import { buildPrompt } from "./promptBuilder.js";
 
 export async function buildContext(context){
     const contents =

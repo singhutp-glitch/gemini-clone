@@ -1,4 +1,4 @@
-import { REASONING_PROMPT } from "../../prompts/reasoningPrompt";
+import { REASONING_PROMPT } from "../../prompts/reasoningPrompt.js";
 const  reasoningFeature = {
     name:'reasoning',
 
@@ -7,8 +7,11 @@ const  reasoningFeature = {
     },
 
     async execute(context){
+        context.stream.write(`${JSON.stringify({
+            type:'status',
+            status:"Reasoning..."
+        })}\n`);
         const feature ={};
-        context.stream.write('Reasoning...');
         feature.name = 'reasoning'
         feature.instruction = REASONING_PROMPT;
         context.features.push(feature);

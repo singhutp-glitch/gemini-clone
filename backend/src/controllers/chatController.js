@@ -4,7 +4,7 @@ import { createNewChat } from "../services/databaseService.js";
 import { loadMessages } from "../services/databaseService.js";
 import { searchChatIdwithUserId } from "../services/databaseService.js";
 import { loadChats } from "../services/databaseService.js";
-import { buildContext } from "../services/chatContextBuilder.js";
+import { buildPipelineContext } from "../pipeline/pipeline.js";
 const sendMessage = async (req,res) => {
         let superSources=[];
     let fullResponse = "";
@@ -39,7 +39,7 @@ const sendMessage = async (req,res) => {
 
         const context = {
             userMessages:messages,
-            userPromot:prompt,
+            userPrompt:prompt,
             options:{
                 webSearch,
                 reasoning
@@ -51,15 +51,13 @@ const sendMessage = async (req,res) => {
             contents:[]
         };
 
-        await buildContext(context);
+        await buildPipelineContext(context);
 
         res.write(`${JSON.stringify({
                 type:'status',
                 status:"Generating..."
             })}\n`);
     
-        console.log('context after buildContext:\n',context);
-       
         const stream =
             await generateResponseStream(
                 context.contents
@@ -90,7 +88,7 @@ const sendMessage = async (req,res) => {
             chatId,
             "assistant",
             fullResponse,
-            sources
+            context.searchSources,
         );
 
         res.end();
