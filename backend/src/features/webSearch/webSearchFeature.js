@@ -24,3 +24,5 @@ const  webSearchFeature = {
         
     }
 }
+
+export default webSearchFeature;
