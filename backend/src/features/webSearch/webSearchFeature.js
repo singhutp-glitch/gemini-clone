@@ -10,9 +10,17 @@ const  webSearchFeature = {
 
     async execute(context){
         context.stream.write('Searching...');
+        const feature = {};
         const searchResults = await searchWeb(context.userPrompt);
-        context.searchResults = searchResults;
+         const resultText = searchResults.results.map((result,index)=>
+        `
+Result ${index+1}
+title: ${result.title}
+url: ${result.url}
+content: ${result.content}
 
+    `
+    ).join('\n');
         const sources = searchResults.results.map((result,index)=>{
                     return {
                         title:result.title,
@@ -20,8 +28,10 @@ const  webSearchFeature = {
                     }
                 });
         context.searchSources = sources;
-        context.execution.request.instructions.webSearch = SEARCH_PROMPT;
-        
+        feature.name = 'webSearch';
+        feature.instruction = SEARCH_PROMPT;
+        feature.resource = resultText;
+        context.feature.push(feature);
     }
 }
 

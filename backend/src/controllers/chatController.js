@@ -44,75 +44,33 @@ const sendMessage = async (req,res) => {
                 webSearch,
                 reasoning
             },
-            searchResults:null,
             searchSources:null,
-            promptSections:[],
-            statuses:[],
             metaData:{},
             stream:res,
-            exection:{
-                session:{
-                    conversation:messages,
-                },
-                request:{
-                    runtime: {
-                        enabledCapabilities: []
-                    },
-
-                    instructions: {},
-
-                    resources: {},
-
-                    task: {
-                        objective:"Answer the user's question.",
-
-                        input:messages,
-                    }
-                }
-            }
+            features:[],
+            contents:[]
         };
-        
-        if(webSearch){
-            res.write(`${JSON.stringify({
-                type:'status',
-                status:"Searching..."
-            })}\n`);
-        }else{
-        if(reasoning){
-            res.write(`${JSON.stringify({
-                type:'status',
-                status:"Reasoning..."
-            })}\n`);
-        }};
 
-        const {contents,sources} = await buildContext(prompt,messages,
-            {webSearch,reasoning});
-        if(!reasoning){
+        await buildContext(context);
+
         res.write(`${JSON.stringify({
                 type:'status',
                 status:"Generating..."
             })}\n`);
-        }else{
-            res.write(`${JSON.stringify({
-                type:'status',
-                status:"Reasoning..."
-            })}\n`);
-        }
-
-        console.log('content:\n',contents);
-       console.log('sources:\n',sources);
+    
+        console.log('context after buildContext:\n',context);
        
         const stream =
             await generateResponseStream(
-                contents
+                context.contents
             );
             if(webSearch){
-                superSources = sources;
+                superSources = context.searchSources;
 
                 const sourceData = JSON.stringify(
                 {
                         type:'sources',
-                        sources
+                        sources:context.searchSources
                 }) 
                 res.write(`${sourceData}\n`);
             }

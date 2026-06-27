@@ -7,9 +7,11 @@ const  reasoningFeature = {
     },
 
     async execute(context){
+        const feature ={};
         context.stream.write('Reasoning...');
-        context.execution.request.instructions.reasoning = REASONING_PROMPT;
-        
+        feature.name = 'reasoning'
+        feature.instruction = REASONING_PROMPT;
+        context.features.push(feature);
     }
 }
 
