@@ -53,6 +53,7 @@ const sendMessage = async (req,res) => {
 
         await buildPipelineContext(context);
 
+        superSources = context.searchSources;
         res.write(`${JSON.stringify({
                 type:'status',
                 status:"Generating..."
@@ -62,16 +63,7 @@ const sendMessage = async (req,res) => {
             await generateResponseStream(
                 context.contents
             );
-            if(webSearch){
-                superSources = context.searchSources;
-
-                const sourceData = JSON.stringify(
-                {
-                        type:'sources',
-                        sources:context.searchSources
-                }) 
-                res.write(`${sourceData}\n`);
-            }
+            
         for await (const chunk of stream) {
 
             const text =

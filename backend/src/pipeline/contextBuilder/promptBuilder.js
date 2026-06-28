@@ -41,9 +41,7 @@ if(context.features.length>0){
     </userQuestion>
 </task>
 `
-}
-    console.log(finalPrompt);
-
+};
     return finalPrompt;
 
 };

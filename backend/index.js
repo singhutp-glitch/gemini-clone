@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { config } from "./config/env.js";
 import chatRoutes from "./src/routes/chatRoutes.js";
 import authRoutes from './src/routes/authRoutes.js';
 
@@ -14,7 +12,7 @@ app.use("/chats", chatRoutes);
 app.use("/auth", authRoutes);
 
 
-const PORT = process.env.PORT;
+const PORT = config.port;
 
 app.listen(PORT, () => {
   console.log("Server running on port "+PORT);

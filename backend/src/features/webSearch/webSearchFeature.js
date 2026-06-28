@@ -1,4 +1,4 @@
-import { searchWeb } from "../../services/searchService.js";
+import { searchWeb } from "./searchService.js";
 import { SEARCH_PROMPT } from "../../prompts/searchPrompts.js";
 
 const  webSearchFeature = {
@@ -35,6 +35,13 @@ content: ${result.content}
         feature.instruction = SEARCH_PROMPT;
         feature.resource = resultText;
         context.features.push(feature);
+
+        const sourceData = JSON.stringify(
+        {
+                type:'sources',
+                sources:context.searchSources
+        }) 
+        context.stream.write(`${sourceData}\n`);
     }
 }
 
