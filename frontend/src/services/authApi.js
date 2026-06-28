@@ -1,7 +1,7 @@
-
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export async function registerUser(name,email,password){
     const response = await fetch(
-        `http://localhost:3000/auth/register`,
+        `${API_BASE_URL}/auth/register`,
         {
             method: "POST",
             headers: {
@@ -21,7 +21,7 @@ export async function registerUser(name,email,password){
 
 export async function loginUser(email,password){
     const response = await fetch(
-        `http://localhost:3000/auth/login`,
+        `${API_BASE_URL}/auth/login`,
         {
             method: "POST",
             headers: {
@@ -41,7 +41,7 @@ export async function loginUser(email,password){
 export async function getUser(){
     const token = localStorage.getItem('token');
     const result = await fetch(
-        `http://localhost:3000/auth/me`,
+        `${API_BASE_URL}/auth/me`,
         {
             method: "GET",
             headers: {

@@ -1,9 +1,9 @@
-
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export async function sendMessage(message)
 {
     const token = localStorage.getItem('token');
     const response = await fetch(
-        'http://localhost:3000/chats',
+        `${API_BASE_URL}/chats`,
         {
             method:'POST',
             headers:{
@@ -32,7 +32,7 @@ export async function streamMessage(
     
     const token = localStorage.getItem('token');
     const response = await fetch(
-        `http://localhost:3000/chats/${currentChatId}/messages`,
+        `${API_BASE_URL}/chats/${currentChatId}/messages`,
         {
             method: "POST",
             headers: {
@@ -113,7 +113,7 @@ export async function streamMessage(
 export async function createNewChatId(prompt){
     const token = localStorage.getItem('token');
     const response = await fetch(
-        `http://localhost:3000/chats/`,
+        `${API_BASE_URL}/chats/`,
         {
             method: "POST",
             headers: {
@@ -133,7 +133,7 @@ export async function createNewChatId(prompt){
 export async function getChats(){
     const token = localStorage.getItem('token');
     const response = await fetch(
-        `http://localhost:3000/chats`,
+        `${API_BASE_URL}/chats`,
         {
             method: "GET",
             headers:{
@@ -150,7 +150,7 @@ export async function getChats(){
 export async function getMessages(chatId){
     const token = localStorage.getItem('token');
     const response = await fetch(
-        `http://localhost:3000/chats/${chatId}/messages`,
+        `${API_BASE_URL}/chats/${chatId}/messages`,
         {
             method: "GET",
             headers:{
