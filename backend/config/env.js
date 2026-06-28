@@ -11,6 +11,7 @@ export const config ={
     geminiApiKey: process.env.GEMINI_API_KEY,
 
     tavilyApiKey: process.env.TAVILY_API_KEY,
+    frontendUrl: process.env.FRONTEND_URL,
 };
 
 // config/env.js

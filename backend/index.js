@@ -1,11 +1,12 @@
 import express from "express";
-import cors from "cors";
+import { corsMiddleware } from "./src/middleware/cors.js";
 import { config } from "./config/env.js";
 import chatRoutes from "./src/routes/chatRoutes.js";
 import authRoutes from './src/routes/authRoutes.js';
 
 const app = express();
-app.use(cors());
+
+app.use(corsMiddleware);
 app.use(express.json());
 
 app.use("/chats", chatRoutes);
