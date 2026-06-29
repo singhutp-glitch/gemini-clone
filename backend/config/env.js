@@ -21,6 +21,7 @@ const required = [
     "JWT_SECRET",
     "GEMINI_API_KEY",
     "TAVILY_API_KEY",
+    'FRONTEND_URL'
 ];
 
 for (const key of required) {
