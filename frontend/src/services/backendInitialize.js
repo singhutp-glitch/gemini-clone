@@ -3,19 +3,25 @@ const HEALTH_URL = `${API_BASE_URL}/health`;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function waitForBackend() {
-    while (true) {
+export async function waitForBackend({
+    retryInterval = 2000,
+    timeout = 120000,
+} = {}) {
+    const start = Date.now();
+
+    while (Date.now() - start < timeout) {
         try {
             const response = await fetch(HEALTH_URL);
 
             if (response.ok) {
                 return;
             }
-        } catch (error) {
-            // Backend still unavailable.
-            // Intentionally ignore and retry.
+        } catch {
+            // Ignore and retry
         }
 
-        await sleep(2000);
+        await sleep(retryInterval);
     }
+
+    return ;
 }
