@@ -14,6 +14,7 @@ export async function waitForBackend({
             const response = await fetch(HEALTH_URL);
 
             if (response.ok) {
+                console.log('backend response');
                 return;
             }
         } catch {
